@@ -1,0 +1,2440 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<title>FON GROUP – Control Entregas 2026</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:Arial,sans-serif;background:#F2EDE4;color:#1B2A3B}
+.hdr{background:#FAFAF7;border-bottom:3px solid #B8952A;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.12)}
+.hdr-top{display:flex;align-items:center;justify-content:space-between;padding:10px 14px 8px}
+.btn-save{background:#B8952A;color:#fff;border:none;padding:9px 18px;border-radius:6px;font-size:13px;font-weight:bold;cursor:pointer}
+.btn-save:active{background:#8B6914}
+.gold-line{height:2px;background:linear-gradient(90deg,#8B6914,#D4AE4E,#8B6914)}
+.tabs{display:flex;overflow-x:auto;background:#1B2A3B;padding:0 8px;gap:2px;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tbtn{flex-shrink:0;background:transparent;border:none;color:#B8952A;padding:10px 14px;cursor:pointer;font-size:12px;font-weight:bold;border-bottom:3px solid transparent;display:flex;flex-direction:column;align-items:center;gap:1px}
+.tbtn .tsub{font-size:9px;font-weight:normal;color:#666}
+.tbtn.active{color:#F0D080;border-bottom:3px solid #B8952A}
+.tcontent{display:none;padding:10px}
+.tcontent.active{display:block}
+.ficha{background:#FFFFFF;border-left:4px solid #B8952A;border-radius:6px;padding:10px 14px;margin-bottom:10px;display:grid;grid-template-columns:1fr 1fr;gap:5px 16px;box-shadow:0 1px 4px rgba(0,0,0,.08)}
+.frow{display:flex;flex-direction:column}
+.fk{font-size:9px;color:#888888;font-weight:bold;text-transform:uppercase;letter-spacing:.5px}
+.fv{font-size:11px;color:#1B2A3B;padding-top:1px}
+.fgold{color:#B8952A;font-weight:bold;font-size:13px}
+.twrap{overflow-x:auto;border-radius:8px;box-shadow:0 1px 6px rgba(0,0,0,.1);margin-bottom:12px}
+table{width:100%;border-collapse:collapse;background:#FFFFFF;min-width:660px}
+thead tr{background:#1B2A3B}
+thead th{color:#F0D080;font-size:10px;font-weight:bold;padding:10px 7px;text-align:center;white-space:nowrap;border-right:1px solid #2D4A6B}
+tbody tr{border-bottom:1px solid #EEE}
+tbody tr:hover{background:#FFFBEE}
+tbody td{padding:5px 6px;font-size:11px;text-align:center;border-right:1px solid #EEE;vertical-align:middle}
+.td-num{font-weight:bold;background:#F2EDE4;color:#1B2A3B;font-size:13px;width:36px}
+.row-extra td{background:#FFF8E8}
+.inp-imp{width:86px;padding:6px;border:1.5px solid #B8952A;border-radius:5px;font-size:12px;font-weight:bold;color:#1B2A3B;text-align:right;background:#FFFDE8}
+.inp-imp:focus{outline:none;border-color:#8B6914;box-shadow:0 0 0 2px rgba(184,149,42,.2)}
+.inp-ref{width:108px;padding:5px 6px;border:1.5px solid #DDD;border-radius:5px;font-size:11px;background:#FFFDE8}
+.inp-ref:focus{outline:none;border-color:#B8952A}
+.sel-est{padding:5px 3px;border:1.5px solid #DDD;border-radius:5px;font-size:11px;background:#FFFDE8;cursor:pointer}
+.sel-est:focus{outline:none;border-color:#B8952A}
+.inp-nota{width:100%;min-width:80px;padding:5px 6px;border:1.5px solid #DDD;border-radius:5px;font-size:10px;background:#FFFDE8}
+.inp-firma{width:66px;padding:5px 4px;border:1.5px solid #DDD;border-radius:5px;font-size:10px;background:#FFFDE8;text-align:center}
+.resumen{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:4px}
+.rbox{background:#FFFFFF;border-radius:8px;padding:14px 10px;text-align:center;box-shadow:0 1px 4px rgba(0,0,0,.1);border-top:3px solid #1B2A3B}
+.rl{font-size:9px;color:#888888;font-weight:bold;text-transform:uppercase;margin-bottom:6px}
+.rv{font-size:18px;font-weight:bold;color:#1B2A3B}
+.grn{color:#1E7A3E}.red{color:#C0392B}
+.bono{border-top:3px solid #B8952A}
+.bono-ok .rv{color:#1E7A3E}.bono-ko .rv{color:#C0392B}
+#toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#1B2A3B;color:#F0D080;padding:10px 26px;border-radius:20px;font-size:13px;opacity:0;transition:opacity .3s;z-index:9999;border:1px solid #B8952A;pointer-events:none}
+</style>
+</head>
+<body>
+<div class="hdr">
+  <div class="hdr-top">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 130" width="280" height="87">
+  <rect width="420" height="130" fill="#FAFAF7"/>
+  <circle cx="65" cy="65" r="54" fill="none" stroke="#1B2A3B" stroke-width="2.5"/>
+  <circle cx="65" cy="65" r="43" fill="none" stroke="#1B2A3B" stroke-width="0.8"/>
+  <polygon points="65,11 73,59 65,65 57,59" fill="#1B2A3B"/>
+  <polygon points="65,119 73,71 65,65 57,71" fill="#1B2A3B"/>
+  <polygon points="119,65 71,73 65,65 71,57" fill="#1B2A3B"/>
+  <polygon points="11,65 59,57 65,65 59,73" fill="#1B2A3B"/>
+  <circle cx="65" cy="65" r="9" fill="#1B2A3B"/>
+  <circle cx="65" cy="65" r="4.5" fill="#FAFAF7"/>
+  <circle cx="65" cy="65" r="1.5" fill="#1B2A3B"/>
+  <text x="138" y="72" font-family="Georgia,'Times New Roman',serif" font-size="62" font-weight="bold" fill="#B8952A" letter-spacing="2">FON</text>
+  <line x1="138" y1="82" x2="410" y2="82" stroke="#B8952A" stroke-width="1.5"/>
+  <text x="138" y="112" font-family="Georgia,'Times New Roman',serif" font-size="40" font-weight="bold" fill="#1B2A3B" letter-spacing="4">GROUP</text>
+  <line x1="138" y1="120" x2="410" y2="120" stroke="#B8952A" stroke-width="1.5"/>
+  <text x="140" y="130" font-family="Arial,sans-serif" font-size="11.5" fill="#888888">Familia. Confianza. Futuro.</text>
+</svg>
+    <button class="btn-save" onclick="save()">💾 Guardar</button>
+  </div>
+  <div class="gold-line"></div>
+  <div class="tabs"><button class="tbtn active" onclick="showTab(1)" id="tbtn1">Mes 1<span class="tsub">Junio</span></button>
+<button class="tbtn " onclick="showTab(2)" id="tbtn2">Mes 2<span class="tsub">Julio</span></button>
+<button class="tbtn " onclick="showTab(3)" id="tbtn3">Mes 3<span class="tsub">Agosto</span></button>
+<button class="tbtn " onclick="showTab(4)" id="tbtn4">Mes 4<span class="tsub">Septiembre</span></button>
+<button class="tbtn " onclick="showTab(5)" id="tbtn5">Mes 5<span class="tsub">Octubre</span></button>
+<button class="tbtn " onclick="showTab(6)" id="tbtn6">Mes 6<span class="tsub">Noviembre</span></button>
+</div>
+</div>
+
+<div class="tcontent active" id="tab1">
+  <div class="ficha">
+    <div class="frow"><span class="fk">Conductor</span><span class="fv">Raimundo Olivera Castaño</span></div>
+    <div class="frow"><span class="fk">Vehículo</span><span class="fv">Toyota Avensis 1.8 · BS-118-O</span></div>
+    <div class="frow"><span class="fk">Período oficial</span><span class="fv">27/06/2026 → 26/07/2026</span></div>
+    <div class="frow"><span class="fk">Entrega diaria</span><span class="fv fgold">15.000 FCFA</span></div>
+    <div class="frow"><span class="fk">Bonificación</span><span class="fv">20.000 FCFA · 0 faltas en 30 días</span></div>
+  </div>
+  <div class="twrap">
+    <table>
+      <thead><tr>
+        <th>Día</th><th>Fecha</th><th>Semana</th>
+        <th>Importe (FCFA)</th><th>Nº Comprobante</th>
+        <th>Estado</th><th>Notas</th><th>Firma</th>
+      </tr></thead>
+      <tbody><tr class="row-extra">
+          <td class="td-num" style="background:#8B6914;color:#fff;font-size:15px">★</td>
+          <td><b>26/06/2026</b></td>
+          <td style="color:#8B6914;font-weight:bold">Viernes</td>
+          <td><input type="number" class="inp-imp" id="c1_extra-imp" placeholder="0" min="0" oninput="calc(1)"></td>
+          <td><input type="text" class="inp-ref" id="c1_extra-ref" placeholder="Nº comprobante"></td>
+          <td><select class="sel-est" id="c1_extra-est" onchange="calc(1)">
+                <option value="">—</option>
+                <option value="si">✓ Entregado</option>
+                <option value="no">✗ No entregado</option>
+              </select></td>
+          <td><input type="text" class="inp-nota" id="c1_extra-nota" placeholder="Notas..."></td>
+          <td><input type="text" class="inp-firma" id="c1_extra-firma" placeholder="Firma"></td>
+        </tr>
+        <tr><td colspan="8" style="background:#8B6914;color:#fff;font-size:9px;padding:3px 10px;text-align:center;font-weight:bold">
+          ★ Viernes 26/06 — Día parcial. NO computa para la bonificación de 30 días.
+        </td></tr>
+        <tr><td colspan="8" style="background:#1B2A3B;color:#F0D080;font-size:9px;padding:4px 10px;text-align:center;font-weight:bold">
+          ▼ CICLO OFICIAL — 30 DÍAS · Día 1 = Sábado 27/06/2026
+        </td></tr><tr style="background:#FAFAF7">
+              <td class="td-num">1</td>
+              <td>27/06/2026</td>
+              <td>Sábado</td>
+              <td><input type="number" class="inp-imp" id="c1_0627-imp" placeholder="0" min="0" oninput="calc(1)"></td>
+              <td><input type="text" class="inp-ref" id="c1_0627-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c1_0627-est" onchange="calc(1)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c1_0627-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c1_0627-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#EDE8DE">
+              <td class="td-num" style="background:#BBBBBB;color:#fff">2</td>
+              <td style="color:#BBBBBB">28/06/2026</td>
+              <td style="color:#C0392B;font-weight:bold">Domingo</td>
+              <td colspan="4" style="color:#BBBBBB;font-style:italic;text-align:center;font-size:10px">— DESCANSO —</td>
+              <td style="color:#BBBBBB">—</td>
+            </tr><tr style="background:#FAFAF7">
+              <td class="td-num">3</td>
+              <td>29/06/2026</td>
+              <td>Lunes</td>
+              <td><input type="number" class="inp-imp" id="c1_0629-imp" placeholder="0" min="0" oninput="calc(1)"></td>
+              <td><input type="text" class="inp-ref" id="c1_0629-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c1_0629-est" onchange="calc(1)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c1_0629-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c1_0629-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#F2EDE4">
+              <td class="td-num">4</td>
+              <td>30/06/2026</td>
+              <td>Martes</td>
+              <td><input type="number" class="inp-imp" id="c1_0630-imp" placeholder="0" min="0" oninput="calc(1)"></td>
+              <td><input type="text" class="inp-ref" id="c1_0630-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c1_0630-est" onchange="calc(1)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c1_0630-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c1_0630-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#FAFAF7">
+              <td class="td-num">5</td>
+              <td>01/07/2026</td>
+              <td>Miércoles</td>
+              <td><input type="number" class="inp-imp" id="c1_0701-imp" placeholder="0" min="0" oninput="calc(1)"></td>
+              <td><input type="text" class="inp-ref" id="c1_0701-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c1_0701-est" onchange="calc(1)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c1_0701-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c1_0701-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#F2EDE4">
+              <td class="td-num">6</td>
+              <td>02/07/2026</td>
+              <td>Jueves</td>
+              <td><input type="number" class="inp-imp" id="c1_0702-imp" placeholder="0" min="0" oninput="calc(1)"></td>
+              <td><input type="text" class="inp-ref" id="c1_0702-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c1_0702-est" onchange="calc(1)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c1_0702-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c1_0702-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#FAFAF7">
+              <td class="td-num">7</td>
+              <td>03/07/2026</td>
+              <td>Viernes</td>
+              <td><input type="number" class="inp-imp" id="c1_0703-imp" placeholder="0" min="0" oninput="calc(1)"></td>
+              <td><input type="text" class="inp-ref" id="c1_0703-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c1_0703-est" onchange="calc(1)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c1_0703-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c1_0703-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#F2EDE4">
+              <td class="td-num">8</td>
+              <td>04/07/2026</td>
+              <td>Sábado</td>
+              <td><input type="number" class="inp-imp" id="c1_0704-imp" placeholder="0" min="0" oninput="calc(1)"></td>
+              <td><input type="text" class="inp-ref" id="c1_0704-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c1_0704-est" onchange="calc(1)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c1_0704-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c1_0704-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#EDE8DE">
+              <td class="td-num" style="background:#BBBBBB;color:#fff">9</td>
+              <td style="color:#BBBBBB">05/07/2026</td>
+              <td style="color:#C0392B;font-weight:bold">Domingo</td>
+              <td colspan="4" style="color:#BBBBBB;font-style:italic;text-align:center;font-size:10px">— DESCANSO —</td>
+              <td style="color:#BBBBBB">—</td>
+            </tr><tr style="background:#F2EDE4">
+              <td class="td-num">10</td>
+              <td>06/07/2026</td>
+              <td>Lunes</td>
+              <td><input type="number" class="inp-imp" id="c1_0706-imp" placeholder="0" min="0" oninput="calc(1)"></td>
+              <td><input type="text" class="inp-ref" id="c1_0706-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c1_0706-est" onchange="calc(1)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c1_0706-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c1_0706-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#FAFAF7">
+              <td class="td-num">11</td>
+              <td>07/07/2026</td>
+              <td>Martes</td>
+              <td><input type="number" class="inp-imp" id="c1_0707-imp" placeholder="0" min="0" oninput="calc(1)"></td>
+              <td><input type="text" class="inp-ref" id="c1_0707-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c1_0707-est" onchange="calc(1)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c1_0707-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c1_0707-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#F2EDE4">
+              <td class="td-num">12</td>
+              <td>08/07/2026</td>
+              <td>Miércoles</td>
+              <td><input type="number" class="inp-imp" id="c1_0708-imp" placeholder="0" min="0" oninput="calc(1)"></td>
+              <td><input type="text" class="inp-ref" id="c1_0708-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c1_0708-est" onchange="calc(1)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c1_0708-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c1_0708-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#FAFAF7">
+              <td class="td-num">13</td>
+              <td>09/07/2026</td>
+              <td>Jueves</td>
+              <td><input type="number" class="inp-imp" id="c1_0709-imp" placeholder="0" min="0" oninput="calc(1)"></td>
+              <td><input type="text" class="inp-ref" id="c1_0709-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c1_0709-est" onchange="calc(1)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c1_0709-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c1_0709-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#F2EDE4">
+              <td class="td-num">14</td>
+              <td>10/07/2026</td>
+              <td>Viernes</td>
+              <td><input type="number" class="inp-imp" id="c1_0710-imp" placeholder="0" min="0" oninput="calc(1)"></td>
+              <td><input type="text" class="inp-ref" id="c1_0710-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c1_0710-est" onchange="calc(1)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c1_0710-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c1_0710-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#FAFAF7">
+              <td class="td-num">15</td>
+              <td>11/07/2026</td>
+              <td>Sábado</td>
+              <td><input type="number" class="inp-imp" id="c1_0711-imp" placeholder="0" min="0" oninput="calc(1)"></td>
+              <td><input type="text" class="inp-ref" id="c1_0711-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c1_0711-est" onchange="calc(1)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c1_0711-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c1_0711-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#EDE8DE">
+              <td class="td-num" style="background:#BBBBBB;color:#fff">16</td>
+              <td style="color:#BBBBBB">12/07/2026</td>
+              <td style="color:#C0392B;font-weight:bold">Domingo</td>
+              <td colspan="4" style="color:#BBBBBB;font-style:italic;text-align:center;font-size:10px">— DESCANSO —</td>
+              <td style="color:#BBBBBB">—</td>
+            </tr><tr style="background:#FAFAF7">
+              <td class="td-num">17</td>
+              <td>13/07/2026</td>
+              <td>Lunes</td>
+              <td><input type="number" class="inp-imp" id="c1_0713-imp" placeholder="0" min="0" oninput="calc(1)"></td>
+              <td><input type="text" class="inp-ref" id="c1_0713-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c1_0713-est" onchange="calc(1)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c1_0713-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c1_0713-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#F2EDE4">
+              <td class="td-num">18</td>
+              <td>14/07/2026</td>
+              <td>Martes</td>
+              <td><input type="number" class="inp-imp" id="c1_0714-imp" placeholder="0" min="0" oninput="calc(1)"></td>
+              <td><input type="text" class="inp-ref" id="c1_0714-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c1_0714-est" onchange="calc(1)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c1_0714-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c1_0714-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#FAFAF7">
+              <td class="td-num">19</td>
+              <td>15/07/2026</td>
+              <td>Miércoles</td>
+              <td><input type="number" class="inp-imp" id="c1_0715-imp" placeholder="0" min="0" oninput="calc(1)"></td>
+              <td><input type="text" class="inp-ref" id="c1_0715-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c1_0715-est" onchange="calc(1)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c1_0715-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c1_0715-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#F2EDE4">
+              <td class="td-num">20</td>
+              <td>16/07/2026</td>
+              <td>Jueves</td>
+              <td><input type="number" class="inp-imp" id="c1_0716-imp" placeholder="0" min="0" oninput="calc(1)"></td>
+              <td><input type="text" class="inp-ref" id="c1_0716-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c1_0716-est" onchange="calc(1)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c1_0716-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c1_0716-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#FAFAF7">
+              <td class="td-num">21</td>
+              <td>17/07/2026</td>
+              <td>Viernes</td>
+              <td><input type="number" class="inp-imp" id="c1_0717-imp" placeholder="0" min="0" oninput="calc(1)"></td>
+              <td><input type="text" class="inp-ref" id="c1_0717-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c1_0717-est" onchange="calc(1)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c1_0717-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c1_0717-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#F2EDE4">
+              <td class="td-num">22</td>
+              <td>18/07/2026</td>
+              <td>Sábado</td>
+              <td><input type="number" class="inp-imp" id="c1_0718-imp" placeholder="0" min="0" oninput="calc(1)"></td>
+              <td><input type="text" class="inp-ref" id="c1_0718-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c1_0718-est" onchange="calc(1)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c1_0718-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c1_0718-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#EDE8DE">
+              <td class="td-num" style="background:#BBBBBB;color:#fff">23</td>
+              <td style="color:#BBBBBB">19/07/2026</td>
+              <td style="color:#C0392B;font-weight:bold">Domingo</td>
+              <td colspan="4" style="color:#BBBBBB;font-style:italic;text-align:center;font-size:10px">— DESCANSO —</td>
+              <td style="color:#BBBBBB">—</td>
+            </tr><tr style="background:#F2EDE4">
+              <td class="td-num">24</td>
+              <td>20/07/2026</td>
+              <td>Lunes</td>
+              <td><input type="number" class="inp-imp" id="c1_0720-imp" placeholder="0" min="0" oninput="calc(1)"></td>
+              <td><input type="text" class="inp-ref" id="c1_0720-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c1_0720-est" onchange="calc(1)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c1_0720-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c1_0720-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#FAFAF7">
+              <td class="td-num">25</td>
+              <td>21/07/2026</td>
+              <td>Martes</td>
+              <td><input type="number" class="inp-imp" id="c1_0721-imp" placeholder="0" min="0" oninput="calc(1)"></td>
+              <td><input type="text" class="inp-ref" id="c1_0721-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c1_0721-est" onchange="calc(1)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c1_0721-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c1_0721-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#F2EDE4">
+              <td class="td-num">26</td>
+              <td>22/07/2026</td>
+              <td>Miércoles</td>
+              <td><input type="number" class="inp-imp" id="c1_0722-imp" placeholder="0" min="0" oninput="calc(1)"></td>
+              <td><input type="text" class="inp-ref" id="c1_0722-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c1_0722-est" onchange="calc(1)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c1_0722-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c1_0722-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#FAFAF7">
+              <td class="td-num">27</td>
+              <td>23/07/2026</td>
+              <td>Jueves</td>
+              <td><input type="number" class="inp-imp" id="c1_0723-imp" placeholder="0" min="0" oninput="calc(1)"></td>
+              <td><input type="text" class="inp-ref" id="c1_0723-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c1_0723-est" onchange="calc(1)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c1_0723-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c1_0723-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#F2EDE4">
+              <td class="td-num">28</td>
+              <td>24/07/2026</td>
+              <td>Viernes</td>
+              <td><input type="number" class="inp-imp" id="c1_0724-imp" placeholder="0" min="0" oninput="calc(1)"></td>
+              <td><input type="text" class="inp-ref" id="c1_0724-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c1_0724-est" onchange="calc(1)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c1_0724-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c1_0724-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#FAFAF7">
+              <td class="td-num">29</td>
+              <td>25/07/2026</td>
+              <td>Sábado</td>
+              <td><input type="number" class="inp-imp" id="c1_0725-imp" placeholder="0" min="0" oninput="calc(1)"></td>
+              <td><input type="text" class="inp-ref" id="c1_0725-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c1_0725-est" onchange="calc(1)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c1_0725-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c1_0725-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#EDE8DE">
+              <td class="td-num" style="background:#BBBBBB;color:#fff">30</td>
+              <td style="color:#BBBBBB">26/07/2026</td>
+              <td style="color:#C0392B;font-weight:bold">Domingo</td>
+              <td colspan="4" style="color:#BBBBBB;font-style:italic;text-align:center;font-size:10px">— DESCANSO —</td>
+              <td style="color:#BBBBBB">—</td>
+            </tr></tbody>
+    </table>
+  </div>
+  <div class="resumen">
+    <div class="rbox"><div class="rl">TOTAL ENTREGADO</div><div class="rv" id="tot1">0 FCFA</div></div>
+    <div class="rbox"><div class="rl">DÍAS CON ENTREGA</div><div class="rv grn" id="dsi1">0</div></div>
+    <div class="rbox"><div class="rl">DÍAS SIN ENTREGA</div><div class="rv red" id="dno1">0</div></div>
+    <div class="rbox bono" id="bono1" style="grid-column:1/-1">
+      <div class="rl">BONIFICACIÓN MES 1</div>
+      <div class="rv" id="bval1">Pendiente</div>
+    </div>
+  </div>
+</div>
+<div class="tcontent " id="tab2">
+  <div class="ficha">
+    <div class="frow"><span class="fk">Conductor</span><span class="fv">Raimundo Olivera Castaño</span></div>
+    <div class="frow"><span class="fk">Vehículo</span><span class="fv">Toyota Avensis 1.8 · BS-118-O</span></div>
+    <div class="frow"><span class="fk">Período oficial</span><span class="fv">27/07/2026 → 25/08/2026</span></div>
+    <div class="frow"><span class="fk">Entrega diaria</span><span class="fv fgold">15.000 FCFA</span></div>
+    <div class="frow"><span class="fk">Bonificación</span><span class="fv">20.000 FCFA · 0 faltas en 30 días</span></div>
+  </div>
+  <div class="twrap">
+    <table>
+      <thead><tr>
+        <th>Día</th><th>Fecha</th><th>Semana</th>
+        <th>Importe (FCFA)</th><th>Nº Comprobante</th>
+        <th>Estado</th><th>Notas</th><th>Firma</th>
+      </tr></thead>
+      <tbody><tr style="background:#FAFAF7">
+              <td class="td-num">1</td>
+              <td>27/07/2026</td>
+              <td>Lunes</td>
+              <td><input type="number" class="inp-imp" id="c2_0727-imp" placeholder="0" min="0" oninput="calc(2)"></td>
+              <td><input type="text" class="inp-ref" id="c2_0727-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c2_0727-est" onchange="calc(2)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c2_0727-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c2_0727-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#F2EDE4">
+              <td class="td-num">2</td>
+              <td>28/07/2026</td>
+              <td>Martes</td>
+              <td><input type="number" class="inp-imp" id="c2_0728-imp" placeholder="0" min="0" oninput="calc(2)"></td>
+              <td><input type="text" class="inp-ref" id="c2_0728-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c2_0728-est" onchange="calc(2)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c2_0728-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c2_0728-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#FAFAF7">
+              <td class="td-num">3</td>
+              <td>29/07/2026</td>
+              <td>Miércoles</td>
+              <td><input type="number" class="inp-imp" id="c2_0729-imp" placeholder="0" min="0" oninput="calc(2)"></td>
+              <td><input type="text" class="inp-ref" id="c2_0729-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c2_0729-est" onchange="calc(2)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c2_0729-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c2_0729-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#F2EDE4">
+              <td class="td-num">4</td>
+              <td>30/07/2026</td>
+              <td>Jueves</td>
+              <td><input type="number" class="inp-imp" id="c2_0730-imp" placeholder="0" min="0" oninput="calc(2)"></td>
+              <td><input type="text" class="inp-ref" id="c2_0730-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c2_0730-est" onchange="calc(2)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c2_0730-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c2_0730-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#FAFAF7">
+              <td class="td-num">5</td>
+              <td>31/07/2026</td>
+              <td>Viernes</td>
+              <td><input type="number" class="inp-imp" id="c2_0731-imp" placeholder="0" min="0" oninput="calc(2)"></td>
+              <td><input type="text" class="inp-ref" id="c2_0731-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c2_0731-est" onchange="calc(2)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c2_0731-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c2_0731-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#F2EDE4">
+              <td class="td-num">6</td>
+              <td>01/08/2026</td>
+              <td>Sábado</td>
+              <td><input type="number" class="inp-imp" id="c2_0801-imp" placeholder="0" min="0" oninput="calc(2)"></td>
+              <td><input type="text" class="inp-ref" id="c2_0801-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c2_0801-est" onchange="calc(2)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c2_0801-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c2_0801-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#EDE8DE">
+              <td class="td-num" style="background:#BBBBBB;color:#fff">7</td>
+              <td style="color:#BBBBBB">02/08/2026</td>
+              <td style="color:#C0392B;font-weight:bold">Domingo</td>
+              <td colspan="4" style="color:#BBBBBB;font-style:italic;text-align:center;font-size:10px">— DESCANSO —</td>
+              <td style="color:#BBBBBB">—</td>
+            </tr><tr style="background:#F2EDE4">
+              <td class="td-num">8</td>
+              <td>03/08/2026</td>
+              <td>Lunes</td>
+              <td><input type="number" class="inp-imp" id="c2_0803-imp" placeholder="0" min="0" oninput="calc(2)"></td>
+              <td><input type="text" class="inp-ref" id="c2_0803-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c2_0803-est" onchange="calc(2)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c2_0803-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c2_0803-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#FAFAF7">
+              <td class="td-num">9</td>
+              <td>04/08/2026</td>
+              <td>Martes</td>
+              <td><input type="number" class="inp-imp" id="c2_0804-imp" placeholder="0" min="0" oninput="calc(2)"></td>
+              <td><input type="text" class="inp-ref" id="c2_0804-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c2_0804-est" onchange="calc(2)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c2_0804-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c2_0804-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#F2EDE4">
+              <td class="td-num">10</td>
+              <td>05/08/2026</td>
+              <td>Miércoles</td>
+              <td><input type="number" class="inp-imp" id="c2_0805-imp" placeholder="0" min="0" oninput="calc(2)"></td>
+              <td><input type="text" class="inp-ref" id="c2_0805-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c2_0805-est" onchange="calc(2)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c2_0805-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c2_0805-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#FAFAF7">
+              <td class="td-num">11</td>
+              <td>06/08/2026</td>
+              <td>Jueves</td>
+              <td><input type="number" class="inp-imp" id="c2_0806-imp" placeholder="0" min="0" oninput="calc(2)"></td>
+              <td><input type="text" class="inp-ref" id="c2_0806-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c2_0806-est" onchange="calc(2)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c2_0806-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c2_0806-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#F2EDE4">
+              <td class="td-num">12</td>
+              <td>07/08/2026</td>
+              <td>Viernes</td>
+              <td><input type="number" class="inp-imp" id="c2_0807-imp" placeholder="0" min="0" oninput="calc(2)"></td>
+              <td><input type="text" class="inp-ref" id="c2_0807-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c2_0807-est" onchange="calc(2)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c2_0807-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c2_0807-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#FAFAF7">
+              <td class="td-num">13</td>
+              <td>08/08/2026</td>
+              <td>Sábado</td>
+              <td><input type="number" class="inp-imp" id="c2_0808-imp" placeholder="0" min="0" oninput="calc(2)"></td>
+              <td><input type="text" class="inp-ref" id="c2_0808-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c2_0808-est" onchange="calc(2)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c2_0808-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c2_0808-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#EDE8DE">
+              <td class="td-num" style="background:#BBBBBB;color:#fff">14</td>
+              <td style="color:#BBBBBB">09/08/2026</td>
+              <td style="color:#C0392B;font-weight:bold">Domingo</td>
+              <td colspan="4" style="color:#BBBBBB;font-style:italic;text-align:center;font-size:10px">— DESCANSO —</td>
+              <td style="color:#BBBBBB">—</td>
+            </tr><tr style="background:#FAFAF7">
+              <td class="td-num">15</td>
+              <td>10/08/2026</td>
+              <td>Lunes</td>
+              <td><input type="number" class="inp-imp" id="c2_0810-imp" placeholder="0" min="0" oninput="calc(2)"></td>
+              <td><input type="text" class="inp-ref" id="c2_0810-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c2_0810-est" onchange="calc(2)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c2_0810-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c2_0810-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#F2EDE4">
+              <td class="td-num">16</td>
+              <td>11/08/2026</td>
+              <td>Martes</td>
+              <td><input type="number" class="inp-imp" id="c2_0811-imp" placeholder="0" min="0" oninput="calc(2)"></td>
+              <td><input type="text" class="inp-ref" id="c2_0811-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c2_0811-est" onchange="calc(2)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c2_0811-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c2_0811-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#FAFAF7">
+              <td class="td-num">17</td>
+              <td>12/08/2026</td>
+              <td>Miércoles</td>
+              <td><input type="number" class="inp-imp" id="c2_0812-imp" placeholder="0" min="0" oninput="calc(2)"></td>
+              <td><input type="text" class="inp-ref" id="c2_0812-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c2_0812-est" onchange="calc(2)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c2_0812-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c2_0812-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#F2EDE4">
+              <td class="td-num">18</td>
+              <td>13/08/2026</td>
+              <td>Jueves</td>
+              <td><input type="number" class="inp-imp" id="c2_0813-imp" placeholder="0" min="0" oninput="calc(2)"></td>
+              <td><input type="text" class="inp-ref" id="c2_0813-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c2_0813-est" onchange="calc(2)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c2_0813-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c2_0813-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#FAFAF7">
+              <td class="td-num">19</td>
+              <td>14/08/2026</td>
+              <td>Viernes</td>
+              <td><input type="number" class="inp-imp" id="c2_0814-imp" placeholder="0" min="0" oninput="calc(2)"></td>
+              <td><input type="text" class="inp-ref" id="c2_0814-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c2_0814-est" onchange="calc(2)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c2_0814-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c2_0814-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#F2EDE4">
+              <td class="td-num">20</td>
+              <td>15/08/2026</td>
+              <td>Sábado</td>
+              <td><input type="number" class="inp-imp" id="c2_0815-imp" placeholder="0" min="0" oninput="calc(2)"></td>
+              <td><input type="text" class="inp-ref" id="c2_0815-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c2_0815-est" onchange="calc(2)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c2_0815-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c2_0815-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#EDE8DE">
+              <td class="td-num" style="background:#BBBBBB;color:#fff">21</td>
+              <td style="color:#BBBBBB">16/08/2026</td>
+              <td style="color:#C0392B;font-weight:bold">Domingo</td>
+              <td colspan="4" style="color:#BBBBBB;font-style:italic;text-align:center;font-size:10px">— DESCANSO —</td>
+              <td style="color:#BBBBBB">—</td>
+            </tr><tr style="background:#F2EDE4">
+              <td class="td-num">22</td>
+              <td>17/08/2026</td>
+              <td>Lunes</td>
+              <td><input type="number" class="inp-imp" id="c2_0817-imp" placeholder="0" min="0" oninput="calc(2)"></td>
+              <td><input type="text" class="inp-ref" id="c2_0817-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c2_0817-est" onchange="calc(2)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c2_0817-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c2_0817-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#FAFAF7">
+              <td class="td-num">23</td>
+              <td>18/08/2026</td>
+              <td>Martes</td>
+              <td><input type="number" class="inp-imp" id="c2_0818-imp" placeholder="0" min="0" oninput="calc(2)"></td>
+              <td><input type="text" class="inp-ref" id="c2_0818-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c2_0818-est" onchange="calc(2)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c2_0818-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c2_0818-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#F2EDE4">
+              <td class="td-num">24</td>
+              <td>19/08/2026</td>
+              <td>Miércoles</td>
+              <td><input type="number" class="inp-imp" id="c2_0819-imp" placeholder="0" min="0" oninput="calc(2)"></td>
+              <td><input type="text" class="inp-ref" id="c2_0819-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c2_0819-est" onchange="calc(2)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c2_0819-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c2_0819-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#FAFAF7">
+              <td class="td-num">25</td>
+              <td>20/08/2026</td>
+              <td>Jueves</td>
+              <td><input type="number" class="inp-imp" id="c2_0820-imp" placeholder="0" min="0" oninput="calc(2)"></td>
+              <td><input type="text" class="inp-ref" id="c2_0820-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c2_0820-est" onchange="calc(2)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c2_0820-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c2_0820-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#F2EDE4">
+              <td class="td-num">26</td>
+              <td>21/08/2026</td>
+              <td>Viernes</td>
+              <td><input type="number" class="inp-imp" id="c2_0821-imp" placeholder="0" min="0" oninput="calc(2)"></td>
+              <td><input type="text" class="inp-ref" id="c2_0821-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c2_0821-est" onchange="calc(2)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c2_0821-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c2_0821-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#FAFAF7">
+              <td class="td-num">27</td>
+              <td>22/08/2026</td>
+              <td>Sábado</td>
+              <td><input type="number" class="inp-imp" id="c2_0822-imp" placeholder="0" min="0" oninput="calc(2)"></td>
+              <td><input type="text" class="inp-ref" id="c2_0822-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c2_0822-est" onchange="calc(2)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c2_0822-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c2_0822-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#EDE8DE">
+              <td class="td-num" style="background:#BBBBBB;color:#fff">28</td>
+              <td style="color:#BBBBBB">23/08/2026</td>
+              <td style="color:#C0392B;font-weight:bold">Domingo</td>
+              <td colspan="4" style="color:#BBBBBB;font-style:italic;text-align:center;font-size:10px">— DESCANSO —</td>
+              <td style="color:#BBBBBB">—</td>
+            </tr><tr style="background:#FAFAF7">
+              <td class="td-num">29</td>
+              <td>24/08/2026</td>
+              <td>Lunes</td>
+              <td><input type="number" class="inp-imp" id="c2_0824-imp" placeholder="0" min="0" oninput="calc(2)"></td>
+              <td><input type="text" class="inp-ref" id="c2_0824-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c2_0824-est" onchange="calc(2)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c2_0824-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c2_0824-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#F2EDE4">
+              <td class="td-num">30</td>
+              <td>25/08/2026</td>
+              <td>Martes</td>
+              <td><input type="number" class="inp-imp" id="c2_0825-imp" placeholder="0" min="0" oninput="calc(2)"></td>
+              <td><input type="text" class="inp-ref" id="c2_0825-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c2_0825-est" onchange="calc(2)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c2_0825-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c2_0825-firma" placeholder="Firma"></td>
+            </tr></tbody>
+    </table>
+  </div>
+  <div class="resumen">
+    <div class="rbox"><div class="rl">TOTAL ENTREGADO</div><div class="rv" id="tot2">0 FCFA</div></div>
+    <div class="rbox"><div class="rl">DÍAS CON ENTREGA</div><div class="rv grn" id="dsi2">0</div></div>
+    <div class="rbox"><div class="rl">DÍAS SIN ENTREGA</div><div class="rv red" id="dno2">0</div></div>
+    <div class="rbox bono" id="bono2" style="grid-column:1/-1">
+      <div class="rl">BONIFICACIÓN MES 2</div>
+      <div class="rv" id="bval2">Pendiente</div>
+    </div>
+  </div>
+</div>
+<div class="tcontent " id="tab3">
+  <div class="ficha">
+    <div class="frow"><span class="fk">Conductor</span><span class="fv">Raimundo Olivera Castaño</span></div>
+    <div class="frow"><span class="fk">Vehículo</span><span class="fv">Toyota Avensis 1.8 · BS-118-O</span></div>
+    <div class="frow"><span class="fk">Período oficial</span><span class="fv">26/08/2026 → 24/09/2026</span></div>
+    <div class="frow"><span class="fk">Entrega diaria</span><span class="fv fgold">15.000 FCFA</span></div>
+    <div class="frow"><span class="fk">Bonificación</span><span class="fv">20.000 FCFA · 0 faltas en 30 días</span></div>
+  </div>
+  <div class="twrap">
+    <table>
+      <thead><tr>
+        <th>Día</th><th>Fecha</th><th>Semana</th>
+        <th>Importe (FCFA)</th><th>Nº Comprobante</th>
+        <th>Estado</th><th>Notas</th><th>Firma</th>
+      </tr></thead>
+      <tbody><tr style="background:#FAFAF7">
+              <td class="td-num">1</td>
+              <td>26/08/2026</td>
+              <td>Miércoles</td>
+              <td><input type="number" class="inp-imp" id="c3_0826-imp" placeholder="0" min="0" oninput="calc(3)"></td>
+              <td><input type="text" class="inp-ref" id="c3_0826-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c3_0826-est" onchange="calc(3)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c3_0826-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c3_0826-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#F2EDE4">
+              <td class="td-num">2</td>
+              <td>27/08/2026</td>
+              <td>Jueves</td>
+              <td><input type="number" class="inp-imp" id="c3_0827-imp" placeholder="0" min="0" oninput="calc(3)"></td>
+              <td><input type="text" class="inp-ref" id="c3_0827-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c3_0827-est" onchange="calc(3)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c3_0827-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c3_0827-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#FAFAF7">
+              <td class="td-num">3</td>
+              <td>28/08/2026</td>
+              <td>Viernes</td>
+              <td><input type="number" class="inp-imp" id="c3_0828-imp" placeholder="0" min="0" oninput="calc(3)"></td>
+              <td><input type="text" class="inp-ref" id="c3_0828-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c3_0828-est" onchange="calc(3)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c3_0828-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c3_0828-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#F2EDE4">
+              <td class="td-num">4</td>
+              <td>29/08/2026</td>
+              <td>Sábado</td>
+              <td><input type="number" class="inp-imp" id="c3_0829-imp" placeholder="0" min="0" oninput="calc(3)"></td>
+              <td><input type="text" class="inp-ref" id="c3_0829-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c3_0829-est" onchange="calc(3)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c3_0829-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c3_0829-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#EDE8DE">
+              <td class="td-num" style="background:#BBBBBB;color:#fff">5</td>
+              <td style="color:#BBBBBB">30/08/2026</td>
+              <td style="color:#C0392B;font-weight:bold">Domingo</td>
+              <td colspan="4" style="color:#BBBBBB;font-style:italic;text-align:center;font-size:10px">— DESCANSO —</td>
+              <td style="color:#BBBBBB">—</td>
+            </tr><tr style="background:#F2EDE4">
+              <td class="td-num">6</td>
+              <td>31/08/2026</td>
+              <td>Lunes</td>
+              <td><input type="number" class="inp-imp" id="c3_0831-imp" placeholder="0" min="0" oninput="calc(3)"></td>
+              <td><input type="text" class="inp-ref" id="c3_0831-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c3_0831-est" onchange="calc(3)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c3_0831-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c3_0831-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#FAFAF7">
+              <td class="td-num">7</td>
+              <td>01/09/2026</td>
+              <td>Martes</td>
+              <td><input type="number" class="inp-imp" id="c3_0901-imp" placeholder="0" min="0" oninput="calc(3)"></td>
+              <td><input type="text" class="inp-ref" id="c3_0901-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c3_0901-est" onchange="calc(3)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c3_0901-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c3_0901-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#F2EDE4">
+              <td class="td-num">8</td>
+              <td>02/09/2026</td>
+              <td>Miércoles</td>
+              <td><input type="number" class="inp-imp" id="c3_0902-imp" placeholder="0" min="0" oninput="calc(3)"></td>
+              <td><input type="text" class="inp-ref" id="c3_0902-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c3_0902-est" onchange="calc(3)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c3_0902-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c3_0902-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#FAFAF7">
+              <td class="td-num">9</td>
+              <td>03/09/2026</td>
+              <td>Jueves</td>
+              <td><input type="number" class="inp-imp" id="c3_0903-imp" placeholder="0" min="0" oninput="calc(3)"></td>
+              <td><input type="text" class="inp-ref" id="c3_0903-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c3_0903-est" onchange="calc(3)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c3_0903-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c3_0903-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#F2EDE4">
+              <td class="td-num">10</td>
+              <td>04/09/2026</td>
+              <td>Viernes</td>
+              <td><input type="number" class="inp-imp" id="c3_0904-imp" placeholder="0" min="0" oninput="calc(3)"></td>
+              <td><input type="text" class="inp-ref" id="c3_0904-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c3_0904-est" onchange="calc(3)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c3_0904-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c3_0904-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#FAFAF7">
+              <td class="td-num">11</td>
+              <td>05/09/2026</td>
+              <td>Sábado</td>
+              <td><input type="number" class="inp-imp" id="c3_0905-imp" placeholder="0" min="0" oninput="calc(3)"></td>
+              <td><input type="text" class="inp-ref" id="c3_0905-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c3_0905-est" onchange="calc(3)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c3_0905-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c3_0905-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#EDE8DE">
+              <td class="td-num" style="background:#BBBBBB;color:#fff">12</td>
+              <td style="color:#BBBBBB">06/09/2026</td>
+              <td style="color:#C0392B;font-weight:bold">Domingo</td>
+              <td colspan="4" style="color:#BBBBBB;font-style:italic;text-align:center;font-size:10px">— DESCANSO —</td>
+              <td style="color:#BBBBBB">—</td>
+            </tr><tr style="background:#FAFAF7">
+              <td class="td-num">13</td>
+              <td>07/09/2026</td>
+              <td>Lunes</td>
+              <td><input type="number" class="inp-imp" id="c3_0907-imp" placeholder="0" min="0" oninput="calc(3)"></td>
+              <td><input type="text" class="inp-ref" id="c3_0907-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c3_0907-est" onchange="calc(3)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c3_0907-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c3_0907-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#F2EDE4">
+              <td class="td-num">14</td>
+              <td>08/09/2026</td>
+              <td>Martes</td>
+              <td><input type="number" class="inp-imp" id="c3_0908-imp" placeholder="0" min="0" oninput="calc(3)"></td>
+              <td><input type="text" class="inp-ref" id="c3_0908-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c3_0908-est" onchange="calc(3)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c3_0908-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c3_0908-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#FAFAF7">
+              <td class="td-num">15</td>
+              <td>09/09/2026</td>
+              <td>Miércoles</td>
+              <td><input type="number" class="inp-imp" id="c3_0909-imp" placeholder="0" min="0" oninput="calc(3)"></td>
+              <td><input type="text" class="inp-ref" id="c3_0909-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c3_0909-est" onchange="calc(3)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c3_0909-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c3_0909-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#F2EDE4">
+              <td class="td-num">16</td>
+              <td>10/09/2026</td>
+              <td>Jueves</td>
+              <td><input type="number" class="inp-imp" id="c3_0910-imp" placeholder="0" min="0" oninput="calc(3)"></td>
+              <td><input type="text" class="inp-ref" id="c3_0910-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c3_0910-est" onchange="calc(3)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c3_0910-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c3_0910-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#FAFAF7">
+              <td class="td-num">17</td>
+              <td>11/09/2026</td>
+              <td>Viernes</td>
+              <td><input type="number" class="inp-imp" id="c3_0911-imp" placeholder="0" min="0" oninput="calc(3)"></td>
+              <td><input type="text" class="inp-ref" id="c3_0911-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c3_0911-est" onchange="calc(3)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c3_0911-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c3_0911-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#F2EDE4">
+              <td class="td-num">18</td>
+              <td>12/09/2026</td>
+              <td>Sábado</td>
+              <td><input type="number" class="inp-imp" id="c3_0912-imp" placeholder="0" min="0" oninput="calc(3)"></td>
+              <td><input type="text" class="inp-ref" id="c3_0912-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c3_0912-est" onchange="calc(3)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c3_0912-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c3_0912-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#EDE8DE">
+              <td class="td-num" style="background:#BBBBBB;color:#fff">19</td>
+              <td style="color:#BBBBBB">13/09/2026</td>
+              <td style="color:#C0392B;font-weight:bold">Domingo</td>
+              <td colspan="4" style="color:#BBBBBB;font-style:italic;text-align:center;font-size:10px">— DESCANSO —</td>
+              <td style="color:#BBBBBB">—</td>
+            </tr><tr style="background:#F2EDE4">
+              <td class="td-num">20</td>
+              <td>14/09/2026</td>
+              <td>Lunes</td>
+              <td><input type="number" class="inp-imp" id="c3_0914-imp" placeholder="0" min="0" oninput="calc(3)"></td>
+              <td><input type="text" class="inp-ref" id="c3_0914-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c3_0914-est" onchange="calc(3)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c3_0914-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c3_0914-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#FAFAF7">
+              <td class="td-num">21</td>
+              <td>15/09/2026</td>
+              <td>Martes</td>
+              <td><input type="number" class="inp-imp" id="c3_0915-imp" placeholder="0" min="0" oninput="calc(3)"></td>
+              <td><input type="text" class="inp-ref" id="c3_0915-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c3_0915-est" onchange="calc(3)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c3_0915-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c3_0915-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#F2EDE4">
+              <td class="td-num">22</td>
+              <td>16/09/2026</td>
+              <td>Miércoles</td>
+              <td><input type="number" class="inp-imp" id="c3_0916-imp" placeholder="0" min="0" oninput="calc(3)"></td>
+              <td><input type="text" class="inp-ref" id="c3_0916-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c3_0916-est" onchange="calc(3)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c3_0916-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c3_0916-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#FAFAF7">
+              <td class="td-num">23</td>
+              <td>17/09/2026</td>
+              <td>Jueves</td>
+              <td><input type="number" class="inp-imp" id="c3_0917-imp" placeholder="0" min="0" oninput="calc(3)"></td>
+              <td><input type="text" class="inp-ref" id="c3_0917-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c3_0917-est" onchange="calc(3)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c3_0917-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c3_0917-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#F2EDE4">
+              <td class="td-num">24</td>
+              <td>18/09/2026</td>
+              <td>Viernes</td>
+              <td><input type="number" class="inp-imp" id="c3_0918-imp" placeholder="0" min="0" oninput="calc(3)"></td>
+              <td><input type="text" class="inp-ref" id="c3_0918-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c3_0918-est" onchange="calc(3)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c3_0918-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c3_0918-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#FAFAF7">
+              <td class="td-num">25</td>
+              <td>19/09/2026</td>
+              <td>Sábado</td>
+              <td><input type="number" class="inp-imp" id="c3_0919-imp" placeholder="0" min="0" oninput="calc(3)"></td>
+              <td><input type="text" class="inp-ref" id="c3_0919-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c3_0919-est" onchange="calc(3)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c3_0919-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c3_0919-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#EDE8DE">
+              <td class="td-num" style="background:#BBBBBB;color:#fff">26</td>
+              <td style="color:#BBBBBB">20/09/2026</td>
+              <td style="color:#C0392B;font-weight:bold">Domingo</td>
+              <td colspan="4" style="color:#BBBBBB;font-style:italic;text-align:center;font-size:10px">— DESCANSO —</td>
+              <td style="color:#BBBBBB">—</td>
+            </tr><tr style="background:#FAFAF7">
+              <td class="td-num">27</td>
+              <td>21/09/2026</td>
+              <td>Lunes</td>
+              <td><input type="number" class="inp-imp" id="c3_0921-imp" placeholder="0" min="0" oninput="calc(3)"></td>
+              <td><input type="text" class="inp-ref" id="c3_0921-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c3_0921-est" onchange="calc(3)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c3_0921-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c3_0921-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#F2EDE4">
+              <td class="td-num">28</td>
+              <td>22/09/2026</td>
+              <td>Martes</td>
+              <td><input type="number" class="inp-imp" id="c3_0922-imp" placeholder="0" min="0" oninput="calc(3)"></td>
+              <td><input type="text" class="inp-ref" id="c3_0922-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c3_0922-est" onchange="calc(3)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c3_0922-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c3_0922-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#FAFAF7">
+              <td class="td-num">29</td>
+              <td>23/09/2026</td>
+              <td>Miércoles</td>
+              <td><input type="number" class="inp-imp" id="c3_0923-imp" placeholder="0" min="0" oninput="calc(3)"></td>
+              <td><input type="text" class="inp-ref" id="c3_0923-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c3_0923-est" onchange="calc(3)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c3_0923-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c3_0923-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#F2EDE4">
+              <td class="td-num">30</td>
+              <td>24/09/2026</td>
+              <td>Jueves</td>
+              <td><input type="number" class="inp-imp" id="c3_0924-imp" placeholder="0" min="0" oninput="calc(3)"></td>
+              <td><input type="text" class="inp-ref" id="c3_0924-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c3_0924-est" onchange="calc(3)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c3_0924-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c3_0924-firma" placeholder="Firma"></td>
+            </tr></tbody>
+    </table>
+  </div>
+  <div class="resumen">
+    <div class="rbox"><div class="rl">TOTAL ENTREGADO</div><div class="rv" id="tot3">0 FCFA</div></div>
+    <div class="rbox"><div class="rl">DÍAS CON ENTREGA</div><div class="rv grn" id="dsi3">0</div></div>
+    <div class="rbox"><div class="rl">DÍAS SIN ENTREGA</div><div class="rv red" id="dno3">0</div></div>
+    <div class="rbox bono" id="bono3" style="grid-column:1/-1">
+      <div class="rl">BONIFICACIÓN MES 3</div>
+      <div class="rv" id="bval3">Pendiente</div>
+    </div>
+  </div>
+</div>
+<div class="tcontent " id="tab4">
+  <div class="ficha">
+    <div class="frow"><span class="fk">Conductor</span><span class="fv">Raimundo Olivera Castaño</span></div>
+    <div class="frow"><span class="fk">Vehículo</span><span class="fv">Toyota Avensis 1.8 · BS-118-O</span></div>
+    <div class="frow"><span class="fk">Período oficial</span><span class="fv">25/09/2026 → 24/10/2026</span></div>
+    <div class="frow"><span class="fk">Entrega diaria</span><span class="fv fgold">15.000 FCFA</span></div>
+    <div class="frow"><span class="fk">Bonificación</span><span class="fv">20.000 FCFA · 0 faltas en 30 días</span></div>
+  </div>
+  <div class="twrap">
+    <table>
+      <thead><tr>
+        <th>Día</th><th>Fecha</th><th>Semana</th>
+        <th>Importe (FCFA)</th><th>Nº Comprobante</th>
+        <th>Estado</th><th>Notas</th><th>Firma</th>
+      </tr></thead>
+      <tbody><tr style="background:#FAFAF7">
+              <td class="td-num">1</td>
+              <td>25/09/2026</td>
+              <td>Viernes</td>
+              <td><input type="number" class="inp-imp" id="c4_0925-imp" placeholder="0" min="0" oninput="calc(4)"></td>
+              <td><input type="text" class="inp-ref" id="c4_0925-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c4_0925-est" onchange="calc(4)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c4_0925-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c4_0925-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#F2EDE4">
+              <td class="td-num">2</td>
+              <td>26/09/2026</td>
+              <td>Sábado</td>
+              <td><input type="number" class="inp-imp" id="c4_0926-imp" placeholder="0" min="0" oninput="calc(4)"></td>
+              <td><input type="text" class="inp-ref" id="c4_0926-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c4_0926-est" onchange="calc(4)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c4_0926-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c4_0926-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#EDE8DE">
+              <td class="td-num" style="background:#BBBBBB;color:#fff">3</td>
+              <td style="color:#BBBBBB">27/09/2026</td>
+              <td style="color:#C0392B;font-weight:bold">Domingo</td>
+              <td colspan="4" style="color:#BBBBBB;font-style:italic;text-align:center;font-size:10px">— DESCANSO —</td>
+              <td style="color:#BBBBBB">—</td>
+            </tr><tr style="background:#F2EDE4">
+              <td class="td-num">4</td>
+              <td>28/09/2026</td>
+              <td>Lunes</td>
+              <td><input type="number" class="inp-imp" id="c4_0928-imp" placeholder="0" min="0" oninput="calc(4)"></td>
+              <td><input type="text" class="inp-ref" id="c4_0928-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c4_0928-est" onchange="calc(4)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c4_0928-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c4_0928-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#FAFAF7">
+              <td class="td-num">5</td>
+              <td>29/09/2026</td>
+              <td>Martes</td>
+              <td><input type="number" class="inp-imp" id="c4_0929-imp" placeholder="0" min="0" oninput="calc(4)"></td>
+              <td><input type="text" class="inp-ref" id="c4_0929-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c4_0929-est" onchange="calc(4)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c4_0929-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c4_0929-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#F2EDE4">
+              <td class="td-num">6</td>
+              <td>30/09/2026</td>
+              <td>Miércoles</td>
+              <td><input type="number" class="inp-imp" id="c4_0930-imp" placeholder="0" min="0" oninput="calc(4)"></td>
+              <td><input type="text" class="inp-ref" id="c4_0930-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c4_0930-est" onchange="calc(4)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c4_0930-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c4_0930-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#FAFAF7">
+              <td class="td-num">7</td>
+              <td>01/10/2026</td>
+              <td>Jueves</td>
+              <td><input type="number" class="inp-imp" id="c4_1001-imp" placeholder="0" min="0" oninput="calc(4)"></td>
+              <td><input type="text" class="inp-ref" id="c4_1001-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c4_1001-est" onchange="calc(4)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c4_1001-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c4_1001-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#F2EDE4">
+              <td class="td-num">8</td>
+              <td>02/10/2026</td>
+              <td>Viernes</td>
+              <td><input type="number" class="inp-imp" id="c4_1002-imp" placeholder="0" min="0" oninput="calc(4)"></td>
+              <td><input type="text" class="inp-ref" id="c4_1002-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c4_1002-est" onchange="calc(4)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c4_1002-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c4_1002-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#FAFAF7">
+              <td class="td-num">9</td>
+              <td>03/10/2026</td>
+              <td>Sábado</td>
+              <td><input type="number" class="inp-imp" id="c4_1003-imp" placeholder="0" min="0" oninput="calc(4)"></td>
+              <td><input type="text" class="inp-ref" id="c4_1003-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c4_1003-est" onchange="calc(4)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c4_1003-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c4_1003-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#EDE8DE">
+              <td class="td-num" style="background:#BBBBBB;color:#fff">10</td>
+              <td style="color:#BBBBBB">04/10/2026</td>
+              <td style="color:#C0392B;font-weight:bold">Domingo</td>
+              <td colspan="4" style="color:#BBBBBB;font-style:italic;text-align:center;font-size:10px">— DESCANSO —</td>
+              <td style="color:#BBBBBB">—</td>
+            </tr><tr style="background:#FAFAF7">
+              <td class="td-num">11</td>
+              <td>05/10/2026</td>
+              <td>Lunes</td>
+              <td><input type="number" class="inp-imp" id="c4_1005-imp" placeholder="0" min="0" oninput="calc(4)"></td>
+              <td><input type="text" class="inp-ref" id="c4_1005-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c4_1005-est" onchange="calc(4)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c4_1005-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c4_1005-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#F2EDE4">
+              <td class="td-num">12</td>
+              <td>06/10/2026</td>
+              <td>Martes</td>
+              <td><input type="number" class="inp-imp" id="c4_1006-imp" placeholder="0" min="0" oninput="calc(4)"></td>
+              <td><input type="text" class="inp-ref" id="c4_1006-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c4_1006-est" onchange="calc(4)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c4_1006-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c4_1006-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#FAFAF7">
+              <td class="td-num">13</td>
+              <td>07/10/2026</td>
+              <td>Miércoles</td>
+              <td><input type="number" class="inp-imp" id="c4_1007-imp" placeholder="0" min="0" oninput="calc(4)"></td>
+              <td><input type="text" class="inp-ref" id="c4_1007-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c4_1007-est" onchange="calc(4)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c4_1007-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c4_1007-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#F2EDE4">
+              <td class="td-num">14</td>
+              <td>08/10/2026</td>
+              <td>Jueves</td>
+              <td><input type="number" class="inp-imp" id="c4_1008-imp" placeholder="0" min="0" oninput="calc(4)"></td>
+              <td><input type="text" class="inp-ref" id="c4_1008-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c4_1008-est" onchange="calc(4)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c4_1008-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c4_1008-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#FAFAF7">
+              <td class="td-num">15</td>
+              <td>09/10/2026</td>
+              <td>Viernes</td>
+              <td><input type="number" class="inp-imp" id="c4_1009-imp" placeholder="0" min="0" oninput="calc(4)"></td>
+              <td><input type="text" class="inp-ref" id="c4_1009-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c4_1009-est" onchange="calc(4)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c4_1009-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c4_1009-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#F2EDE4">
+              <td class="td-num">16</td>
+              <td>10/10/2026</td>
+              <td>Sábado</td>
+              <td><input type="number" class="inp-imp" id="c4_1010-imp" placeholder="0" min="0" oninput="calc(4)"></td>
+              <td><input type="text" class="inp-ref" id="c4_1010-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c4_1010-est" onchange="calc(4)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c4_1010-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c4_1010-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#EDE8DE">
+              <td class="td-num" style="background:#BBBBBB;color:#fff">17</td>
+              <td style="color:#BBBBBB">11/10/2026</td>
+              <td style="color:#C0392B;font-weight:bold">Domingo</td>
+              <td colspan="4" style="color:#BBBBBB;font-style:italic;text-align:center;font-size:10px">— DESCANSO —</td>
+              <td style="color:#BBBBBB">—</td>
+            </tr><tr style="background:#F2EDE4">
+              <td class="td-num">18</td>
+              <td>12/10/2026</td>
+              <td>Lunes</td>
+              <td><input type="number" class="inp-imp" id="c4_1012-imp" placeholder="0" min="0" oninput="calc(4)"></td>
+              <td><input type="text" class="inp-ref" id="c4_1012-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c4_1012-est" onchange="calc(4)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c4_1012-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c4_1012-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#FAFAF7">
+              <td class="td-num">19</td>
+              <td>13/10/2026</td>
+              <td>Martes</td>
+              <td><input type="number" class="inp-imp" id="c4_1013-imp" placeholder="0" min="0" oninput="calc(4)"></td>
+              <td><input type="text" class="inp-ref" id="c4_1013-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c4_1013-est" onchange="calc(4)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c4_1013-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c4_1013-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#F2EDE4">
+              <td class="td-num">20</td>
+              <td>14/10/2026</td>
+              <td>Miércoles</td>
+              <td><input type="number" class="inp-imp" id="c4_1014-imp" placeholder="0" min="0" oninput="calc(4)"></td>
+              <td><input type="text" class="inp-ref" id="c4_1014-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c4_1014-est" onchange="calc(4)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c4_1014-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c4_1014-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#FAFAF7">
+              <td class="td-num">21</td>
+              <td>15/10/2026</td>
+              <td>Jueves</td>
+              <td><input type="number" class="inp-imp" id="c4_1015-imp" placeholder="0" min="0" oninput="calc(4)"></td>
+              <td><input type="text" class="inp-ref" id="c4_1015-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c4_1015-est" onchange="calc(4)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c4_1015-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c4_1015-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#F2EDE4">
+              <td class="td-num">22</td>
+              <td>16/10/2026</td>
+              <td>Viernes</td>
+              <td><input type="number" class="inp-imp" id="c4_1016-imp" placeholder="0" min="0" oninput="calc(4)"></td>
+              <td><input type="text" class="inp-ref" id="c4_1016-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c4_1016-est" onchange="calc(4)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c4_1016-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c4_1016-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#FAFAF7">
+              <td class="td-num">23</td>
+              <td>17/10/2026</td>
+              <td>Sábado</td>
+              <td><input type="number" class="inp-imp" id="c4_1017-imp" placeholder="0" min="0" oninput="calc(4)"></td>
+              <td><input type="text" class="inp-ref" id="c4_1017-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c4_1017-est" onchange="calc(4)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c4_1017-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c4_1017-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#EDE8DE">
+              <td class="td-num" style="background:#BBBBBB;color:#fff">24</td>
+              <td style="color:#BBBBBB">18/10/2026</td>
+              <td style="color:#C0392B;font-weight:bold">Domingo</td>
+              <td colspan="4" style="color:#BBBBBB;font-style:italic;text-align:center;font-size:10px">— DESCANSO —</td>
+              <td style="color:#BBBBBB">—</td>
+            </tr><tr style="background:#FAFAF7">
+              <td class="td-num">25</td>
+              <td>19/10/2026</td>
+              <td>Lunes</td>
+              <td><input type="number" class="inp-imp" id="c4_1019-imp" placeholder="0" min="0" oninput="calc(4)"></td>
+              <td><input type="text" class="inp-ref" id="c4_1019-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c4_1019-est" onchange="calc(4)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c4_1019-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c4_1019-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#F2EDE4">
+              <td class="td-num">26</td>
+              <td>20/10/2026</td>
+              <td>Martes</td>
+              <td><input type="number" class="inp-imp" id="c4_1020-imp" placeholder="0" min="0" oninput="calc(4)"></td>
+              <td><input type="text" class="inp-ref" id="c4_1020-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c4_1020-est" onchange="calc(4)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c4_1020-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c4_1020-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#FAFAF7">
+              <td class="td-num">27</td>
+              <td>21/10/2026</td>
+              <td>Miércoles</td>
+              <td><input type="number" class="inp-imp" id="c4_1021-imp" placeholder="0" min="0" oninput="calc(4)"></td>
+              <td><input type="text" class="inp-ref" id="c4_1021-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c4_1021-est" onchange="calc(4)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c4_1021-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c4_1021-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#F2EDE4">
+              <td class="td-num">28</td>
+              <td>22/10/2026</td>
+              <td>Jueves</td>
+              <td><input type="number" class="inp-imp" id="c4_1022-imp" placeholder="0" min="0" oninput="calc(4)"></td>
+              <td><input type="text" class="inp-ref" id="c4_1022-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c4_1022-est" onchange="calc(4)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c4_1022-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c4_1022-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#FAFAF7">
+              <td class="td-num">29</td>
+              <td>23/10/2026</td>
+              <td>Viernes</td>
+              <td><input type="number" class="inp-imp" id="c4_1023-imp" placeholder="0" min="0" oninput="calc(4)"></td>
+              <td><input type="text" class="inp-ref" id="c4_1023-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c4_1023-est" onchange="calc(4)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c4_1023-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c4_1023-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#F2EDE4">
+              <td class="td-num">30</td>
+              <td>24/10/2026</td>
+              <td>Sábado</td>
+              <td><input type="number" class="inp-imp" id="c4_1024-imp" placeholder="0" min="0" oninput="calc(4)"></td>
+              <td><input type="text" class="inp-ref" id="c4_1024-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c4_1024-est" onchange="calc(4)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c4_1024-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c4_1024-firma" placeholder="Firma"></td>
+            </tr></tbody>
+    </table>
+  </div>
+  <div class="resumen">
+    <div class="rbox"><div class="rl">TOTAL ENTREGADO</div><div class="rv" id="tot4">0 FCFA</div></div>
+    <div class="rbox"><div class="rl">DÍAS CON ENTREGA</div><div class="rv grn" id="dsi4">0</div></div>
+    <div class="rbox"><div class="rl">DÍAS SIN ENTREGA</div><div class="rv red" id="dno4">0</div></div>
+    <div class="rbox bono" id="bono4" style="grid-column:1/-1">
+      <div class="rl">BONIFICACIÓN MES 4</div>
+      <div class="rv" id="bval4">Pendiente</div>
+    </div>
+  </div>
+</div>
+<div class="tcontent " id="tab5">
+  <div class="ficha">
+    <div class="frow"><span class="fk">Conductor</span><span class="fv">Raimundo Olivera Castaño</span></div>
+    <div class="frow"><span class="fk">Vehículo</span><span class="fv">Toyota Avensis 1.8 · BS-118-O</span></div>
+    <div class="frow"><span class="fk">Período oficial</span><span class="fv">25/10/2026 → 23/11/2026</span></div>
+    <div class="frow"><span class="fk">Entrega diaria</span><span class="fv fgold">15.000 FCFA</span></div>
+    <div class="frow"><span class="fk">Bonificación</span><span class="fv">20.000 FCFA · 0 faltas en 30 días</span></div>
+  </div>
+  <div class="twrap">
+    <table>
+      <thead><tr>
+        <th>Día</th><th>Fecha</th><th>Semana</th>
+        <th>Importe (FCFA)</th><th>Nº Comprobante</th>
+        <th>Estado</th><th>Notas</th><th>Firma</th>
+      </tr></thead>
+      <tbody><tr style="background:#EDE8DE">
+              <td class="td-num" style="background:#BBBBBB;color:#fff">1</td>
+              <td style="color:#BBBBBB">25/10/2026</td>
+              <td style="color:#C0392B;font-weight:bold">Domingo</td>
+              <td colspan="4" style="color:#BBBBBB;font-style:italic;text-align:center;font-size:10px">— DESCANSO —</td>
+              <td style="color:#BBBBBB">—</td>
+            </tr><tr style="background:#F2EDE4">
+              <td class="td-num">2</td>
+              <td>26/10/2026</td>
+              <td>Lunes</td>
+              <td><input type="number" class="inp-imp" id="c5_1026-imp" placeholder="0" min="0" oninput="calc(5)"></td>
+              <td><input type="text" class="inp-ref" id="c5_1026-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c5_1026-est" onchange="calc(5)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c5_1026-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c5_1026-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#FAFAF7">
+              <td class="td-num">3</td>
+              <td>27/10/2026</td>
+              <td>Martes</td>
+              <td><input type="number" class="inp-imp" id="c5_1027-imp" placeholder="0" min="0" oninput="calc(5)"></td>
+              <td><input type="text" class="inp-ref" id="c5_1027-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c5_1027-est" onchange="calc(5)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c5_1027-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c5_1027-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#F2EDE4">
+              <td class="td-num">4</td>
+              <td>28/10/2026</td>
+              <td>Miércoles</td>
+              <td><input type="number" class="inp-imp" id="c5_1028-imp" placeholder="0" min="0" oninput="calc(5)"></td>
+              <td><input type="text" class="inp-ref" id="c5_1028-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c5_1028-est" onchange="calc(5)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c5_1028-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c5_1028-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#FAFAF7">
+              <td class="td-num">5</td>
+              <td>29/10/2026</td>
+              <td>Jueves</td>
+              <td><input type="number" class="inp-imp" id="c5_1029-imp" placeholder="0" min="0" oninput="calc(5)"></td>
+              <td><input type="text" class="inp-ref" id="c5_1029-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c5_1029-est" onchange="calc(5)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c5_1029-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c5_1029-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#F2EDE4">
+              <td class="td-num">6</td>
+              <td>30/10/2026</td>
+              <td>Viernes</td>
+              <td><input type="number" class="inp-imp" id="c5_1030-imp" placeholder="0" min="0" oninput="calc(5)"></td>
+              <td><input type="text" class="inp-ref" id="c5_1030-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c5_1030-est" onchange="calc(5)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c5_1030-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c5_1030-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#FAFAF7">
+              <td class="td-num">7</td>
+              <td>31/10/2026</td>
+              <td>Sábado</td>
+              <td><input type="number" class="inp-imp" id="c5_1031-imp" placeholder="0" min="0" oninput="calc(5)"></td>
+              <td><input type="text" class="inp-ref" id="c5_1031-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c5_1031-est" onchange="calc(5)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c5_1031-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c5_1031-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#EDE8DE">
+              <td class="td-num" style="background:#BBBBBB;color:#fff">8</td>
+              <td style="color:#BBBBBB">01/11/2026</td>
+              <td style="color:#C0392B;font-weight:bold">Domingo</td>
+              <td colspan="4" style="color:#BBBBBB;font-style:italic;text-align:center;font-size:10px">— DESCANSO —</td>
+              <td style="color:#BBBBBB">—</td>
+            </tr><tr style="background:#FAFAF7">
+              <td class="td-num">9</td>
+              <td>02/11/2026</td>
+              <td>Lunes</td>
+              <td><input type="number" class="inp-imp" id="c5_1102-imp" placeholder="0" min="0" oninput="calc(5)"></td>
+              <td><input type="text" class="inp-ref" id="c5_1102-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c5_1102-est" onchange="calc(5)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c5_1102-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c5_1102-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#F2EDE4">
+              <td class="td-num">10</td>
+              <td>03/11/2026</td>
+              <td>Martes</td>
+              <td><input type="number" class="inp-imp" id="c5_1103-imp" placeholder="0" min="0" oninput="calc(5)"></td>
+              <td><input type="text" class="inp-ref" id="c5_1103-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c5_1103-est" onchange="calc(5)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c5_1103-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c5_1103-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#FAFAF7">
+              <td class="td-num">11</td>
+              <td>04/11/2026</td>
+              <td>Miércoles</td>
+              <td><input type="number" class="inp-imp" id="c5_1104-imp" placeholder="0" min="0" oninput="calc(5)"></td>
+              <td><input type="text" class="inp-ref" id="c5_1104-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c5_1104-est" onchange="calc(5)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c5_1104-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c5_1104-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#F2EDE4">
+              <td class="td-num">12</td>
+              <td>05/11/2026</td>
+              <td>Jueves</td>
+              <td><input type="number" class="inp-imp" id="c5_1105-imp" placeholder="0" min="0" oninput="calc(5)"></td>
+              <td><input type="text" class="inp-ref" id="c5_1105-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c5_1105-est" onchange="calc(5)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c5_1105-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c5_1105-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#FAFAF7">
+              <td class="td-num">13</td>
+              <td>06/11/2026</td>
+              <td>Viernes</td>
+              <td><input type="number" class="inp-imp" id="c5_1106-imp" placeholder="0" min="0" oninput="calc(5)"></td>
+              <td><input type="text" class="inp-ref" id="c5_1106-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c5_1106-est" onchange="calc(5)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c5_1106-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c5_1106-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#F2EDE4">
+              <td class="td-num">14</td>
+              <td>07/11/2026</td>
+              <td>Sábado</td>
+              <td><input type="number" class="inp-imp" id="c5_1107-imp" placeholder="0" min="0" oninput="calc(5)"></td>
+              <td><input type="text" class="inp-ref" id="c5_1107-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c5_1107-est" onchange="calc(5)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c5_1107-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c5_1107-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#EDE8DE">
+              <td class="td-num" style="background:#BBBBBB;color:#fff">15</td>
+              <td style="color:#BBBBBB">08/11/2026</td>
+              <td style="color:#C0392B;font-weight:bold">Domingo</td>
+              <td colspan="4" style="color:#BBBBBB;font-style:italic;text-align:center;font-size:10px">— DESCANSO —</td>
+              <td style="color:#BBBBBB">—</td>
+            </tr><tr style="background:#F2EDE4">
+              <td class="td-num">16</td>
+              <td>09/11/2026</td>
+              <td>Lunes</td>
+              <td><input type="number" class="inp-imp" id="c5_1109-imp" placeholder="0" min="0" oninput="calc(5)"></td>
+              <td><input type="text" class="inp-ref" id="c5_1109-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c5_1109-est" onchange="calc(5)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c5_1109-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c5_1109-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#FAFAF7">
+              <td class="td-num">17</td>
+              <td>10/11/2026</td>
+              <td>Martes</td>
+              <td><input type="number" class="inp-imp" id="c5_1110-imp" placeholder="0" min="0" oninput="calc(5)"></td>
+              <td><input type="text" class="inp-ref" id="c5_1110-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c5_1110-est" onchange="calc(5)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c5_1110-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c5_1110-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#F2EDE4">
+              <td class="td-num">18</td>
+              <td>11/11/2026</td>
+              <td>Miércoles</td>
+              <td><input type="number" class="inp-imp" id="c5_1111-imp" placeholder="0" min="0" oninput="calc(5)"></td>
+              <td><input type="text" class="inp-ref" id="c5_1111-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c5_1111-est" onchange="calc(5)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c5_1111-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c5_1111-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#FAFAF7">
+              <td class="td-num">19</td>
+              <td>12/11/2026</td>
+              <td>Jueves</td>
+              <td><input type="number" class="inp-imp" id="c5_1112-imp" placeholder="0" min="0" oninput="calc(5)"></td>
+              <td><input type="text" class="inp-ref" id="c5_1112-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c5_1112-est" onchange="calc(5)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c5_1112-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c5_1112-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#F2EDE4">
+              <td class="td-num">20</td>
+              <td>13/11/2026</td>
+              <td>Viernes</td>
+              <td><input type="number" class="inp-imp" id="c5_1113-imp" placeholder="0" min="0" oninput="calc(5)"></td>
+              <td><input type="text" class="inp-ref" id="c5_1113-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c5_1113-est" onchange="calc(5)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c5_1113-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c5_1113-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#FAFAF7">
+              <td class="td-num">21</td>
+              <td>14/11/2026</td>
+              <td>Sábado</td>
+              <td><input type="number" class="inp-imp" id="c5_1114-imp" placeholder="0" min="0" oninput="calc(5)"></td>
+              <td><input type="text" class="inp-ref" id="c5_1114-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c5_1114-est" onchange="calc(5)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c5_1114-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c5_1114-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#EDE8DE">
+              <td class="td-num" style="background:#BBBBBB;color:#fff">22</td>
+              <td style="color:#BBBBBB">15/11/2026</td>
+              <td style="color:#C0392B;font-weight:bold">Domingo</td>
+              <td colspan="4" style="color:#BBBBBB;font-style:italic;text-align:center;font-size:10px">— DESCANSO —</td>
+              <td style="color:#BBBBBB">—</td>
+            </tr><tr style="background:#FAFAF7">
+              <td class="td-num">23</td>
+              <td>16/11/2026</td>
+              <td>Lunes</td>
+              <td><input type="number" class="inp-imp" id="c5_1116-imp" placeholder="0" min="0" oninput="calc(5)"></td>
+              <td><input type="text" class="inp-ref" id="c5_1116-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c5_1116-est" onchange="calc(5)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c5_1116-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c5_1116-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#F2EDE4">
+              <td class="td-num">24</td>
+              <td>17/11/2026</td>
+              <td>Martes</td>
+              <td><input type="number" class="inp-imp" id="c5_1117-imp" placeholder="0" min="0" oninput="calc(5)"></td>
+              <td><input type="text" class="inp-ref" id="c5_1117-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c5_1117-est" onchange="calc(5)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c5_1117-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c5_1117-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#FAFAF7">
+              <td class="td-num">25</td>
+              <td>18/11/2026</td>
+              <td>Miércoles</td>
+              <td><input type="number" class="inp-imp" id="c5_1118-imp" placeholder="0" min="0" oninput="calc(5)"></td>
+              <td><input type="text" class="inp-ref" id="c5_1118-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c5_1118-est" onchange="calc(5)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c5_1118-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c5_1118-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#F2EDE4">
+              <td class="td-num">26</td>
+              <td>19/11/2026</td>
+              <td>Jueves</td>
+              <td><input type="number" class="inp-imp" id="c5_1119-imp" placeholder="0" min="0" oninput="calc(5)"></td>
+              <td><input type="text" class="inp-ref" id="c5_1119-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c5_1119-est" onchange="calc(5)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c5_1119-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c5_1119-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#FAFAF7">
+              <td class="td-num">27</td>
+              <td>20/11/2026</td>
+              <td>Viernes</td>
+              <td><input type="number" class="inp-imp" id="c5_1120-imp" placeholder="0" min="0" oninput="calc(5)"></td>
+              <td><input type="text" class="inp-ref" id="c5_1120-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c5_1120-est" onchange="calc(5)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c5_1120-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c5_1120-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#F2EDE4">
+              <td class="td-num">28</td>
+              <td>21/11/2026</td>
+              <td>Sábado</td>
+              <td><input type="number" class="inp-imp" id="c5_1121-imp" placeholder="0" min="0" oninput="calc(5)"></td>
+              <td><input type="text" class="inp-ref" id="c5_1121-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c5_1121-est" onchange="calc(5)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c5_1121-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c5_1121-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#EDE8DE">
+              <td class="td-num" style="background:#BBBBBB;color:#fff">29</td>
+              <td style="color:#BBBBBB">22/11/2026</td>
+              <td style="color:#C0392B;font-weight:bold">Domingo</td>
+              <td colspan="4" style="color:#BBBBBB;font-style:italic;text-align:center;font-size:10px">— DESCANSO —</td>
+              <td style="color:#BBBBBB">—</td>
+            </tr><tr style="background:#F2EDE4">
+              <td class="td-num">30</td>
+              <td>23/11/2026</td>
+              <td>Lunes</td>
+              <td><input type="number" class="inp-imp" id="c5_1123-imp" placeholder="0" min="0" oninput="calc(5)"></td>
+              <td><input type="text" class="inp-ref" id="c5_1123-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c5_1123-est" onchange="calc(5)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c5_1123-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c5_1123-firma" placeholder="Firma"></td>
+            </tr></tbody>
+    </table>
+  </div>
+  <div class="resumen">
+    <div class="rbox"><div class="rl">TOTAL ENTREGADO</div><div class="rv" id="tot5">0 FCFA</div></div>
+    <div class="rbox"><div class="rl">DÍAS CON ENTREGA</div><div class="rv grn" id="dsi5">0</div></div>
+    <div class="rbox"><div class="rl">DÍAS SIN ENTREGA</div><div class="rv red" id="dno5">0</div></div>
+    <div class="rbox bono" id="bono5" style="grid-column:1/-1">
+      <div class="rl">BONIFICACIÓN MES 5</div>
+      <div class="rv" id="bval5">Pendiente</div>
+    </div>
+  </div>
+</div>
+<div class="tcontent " id="tab6">
+  <div class="ficha">
+    <div class="frow"><span class="fk">Conductor</span><span class="fv">Raimundo Olivera Castaño</span></div>
+    <div class="frow"><span class="fk">Vehículo</span><span class="fv">Toyota Avensis 1.8 · BS-118-O</span></div>
+    <div class="frow"><span class="fk">Período oficial</span><span class="fv">24/11/2026 → 23/12/2026</span></div>
+    <div class="frow"><span class="fk">Entrega diaria</span><span class="fv fgold">15.000 FCFA</span></div>
+    <div class="frow"><span class="fk">Bonificación</span><span class="fv">20.000 FCFA · 0 faltas en 30 días</span></div>
+  </div>
+  <div class="twrap">
+    <table>
+      <thead><tr>
+        <th>Día</th><th>Fecha</th><th>Semana</th>
+        <th>Importe (FCFA)</th><th>Nº Comprobante</th>
+        <th>Estado</th><th>Notas</th><th>Firma</th>
+      </tr></thead>
+      <tbody><tr style="background:#FAFAF7">
+              <td class="td-num">1</td>
+              <td>24/11/2026</td>
+              <td>Martes</td>
+              <td><input type="number" class="inp-imp" id="c6_1124-imp" placeholder="0" min="0" oninput="calc(6)"></td>
+              <td><input type="text" class="inp-ref" id="c6_1124-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c6_1124-est" onchange="calc(6)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c6_1124-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c6_1124-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#F2EDE4">
+              <td class="td-num">2</td>
+              <td>25/11/2026</td>
+              <td>Miércoles</td>
+              <td><input type="number" class="inp-imp" id="c6_1125-imp" placeholder="0" min="0" oninput="calc(6)"></td>
+              <td><input type="text" class="inp-ref" id="c6_1125-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c6_1125-est" onchange="calc(6)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c6_1125-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c6_1125-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#FAFAF7">
+              <td class="td-num">3</td>
+              <td>26/11/2026</td>
+              <td>Jueves</td>
+              <td><input type="number" class="inp-imp" id="c6_1126-imp" placeholder="0" min="0" oninput="calc(6)"></td>
+              <td><input type="text" class="inp-ref" id="c6_1126-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c6_1126-est" onchange="calc(6)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c6_1126-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c6_1126-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#F2EDE4">
+              <td class="td-num">4</td>
+              <td>27/11/2026</td>
+              <td>Viernes</td>
+              <td><input type="number" class="inp-imp" id="c6_1127-imp" placeholder="0" min="0" oninput="calc(6)"></td>
+              <td><input type="text" class="inp-ref" id="c6_1127-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c6_1127-est" onchange="calc(6)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c6_1127-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c6_1127-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#FAFAF7">
+              <td class="td-num">5</td>
+              <td>28/11/2026</td>
+              <td>Sábado</td>
+              <td><input type="number" class="inp-imp" id="c6_1128-imp" placeholder="0" min="0" oninput="calc(6)"></td>
+              <td><input type="text" class="inp-ref" id="c6_1128-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c6_1128-est" onchange="calc(6)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c6_1128-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c6_1128-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#EDE8DE">
+              <td class="td-num" style="background:#BBBBBB;color:#fff">6</td>
+              <td style="color:#BBBBBB">29/11/2026</td>
+              <td style="color:#C0392B;font-weight:bold">Domingo</td>
+              <td colspan="4" style="color:#BBBBBB;font-style:italic;text-align:center;font-size:10px">— DESCANSO —</td>
+              <td style="color:#BBBBBB">—</td>
+            </tr><tr style="background:#FAFAF7">
+              <td class="td-num">7</td>
+              <td>30/11/2026</td>
+              <td>Lunes</td>
+              <td><input type="number" class="inp-imp" id="c6_1130-imp" placeholder="0" min="0" oninput="calc(6)"></td>
+              <td><input type="text" class="inp-ref" id="c6_1130-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c6_1130-est" onchange="calc(6)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c6_1130-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c6_1130-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#F2EDE4">
+              <td class="td-num">8</td>
+              <td>01/12/2026</td>
+              <td>Martes</td>
+              <td><input type="number" class="inp-imp" id="c6_1201-imp" placeholder="0" min="0" oninput="calc(6)"></td>
+              <td><input type="text" class="inp-ref" id="c6_1201-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c6_1201-est" onchange="calc(6)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c6_1201-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c6_1201-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#FAFAF7">
+              <td class="td-num">9</td>
+              <td>02/12/2026</td>
+              <td>Miércoles</td>
+              <td><input type="number" class="inp-imp" id="c6_1202-imp" placeholder="0" min="0" oninput="calc(6)"></td>
+              <td><input type="text" class="inp-ref" id="c6_1202-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c6_1202-est" onchange="calc(6)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c6_1202-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c6_1202-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#F2EDE4">
+              <td class="td-num">10</td>
+              <td>03/12/2026</td>
+              <td>Jueves</td>
+              <td><input type="number" class="inp-imp" id="c6_1203-imp" placeholder="0" min="0" oninput="calc(6)"></td>
+              <td><input type="text" class="inp-ref" id="c6_1203-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c6_1203-est" onchange="calc(6)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c6_1203-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c6_1203-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#FAFAF7">
+              <td class="td-num">11</td>
+              <td>04/12/2026</td>
+              <td>Viernes</td>
+              <td><input type="number" class="inp-imp" id="c6_1204-imp" placeholder="0" min="0" oninput="calc(6)"></td>
+              <td><input type="text" class="inp-ref" id="c6_1204-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c6_1204-est" onchange="calc(6)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c6_1204-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c6_1204-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#F2EDE4">
+              <td class="td-num">12</td>
+              <td>05/12/2026</td>
+              <td>Sábado</td>
+              <td><input type="number" class="inp-imp" id="c6_1205-imp" placeholder="0" min="0" oninput="calc(6)"></td>
+              <td><input type="text" class="inp-ref" id="c6_1205-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c6_1205-est" onchange="calc(6)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c6_1205-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c6_1205-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#EDE8DE">
+              <td class="td-num" style="background:#BBBBBB;color:#fff">13</td>
+              <td style="color:#BBBBBB">06/12/2026</td>
+              <td style="color:#C0392B;font-weight:bold">Domingo</td>
+              <td colspan="4" style="color:#BBBBBB;font-style:italic;text-align:center;font-size:10px">— DESCANSO —</td>
+              <td style="color:#BBBBBB">—</td>
+            </tr><tr style="background:#F2EDE4">
+              <td class="td-num">14</td>
+              <td>07/12/2026</td>
+              <td>Lunes</td>
+              <td><input type="number" class="inp-imp" id="c6_1207-imp" placeholder="0" min="0" oninput="calc(6)"></td>
+              <td><input type="text" class="inp-ref" id="c6_1207-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c6_1207-est" onchange="calc(6)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c6_1207-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c6_1207-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#FAFAF7">
+              <td class="td-num">15</td>
+              <td>08/12/2026</td>
+              <td>Martes</td>
+              <td><input type="number" class="inp-imp" id="c6_1208-imp" placeholder="0" min="0" oninput="calc(6)"></td>
+              <td><input type="text" class="inp-ref" id="c6_1208-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c6_1208-est" onchange="calc(6)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c6_1208-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c6_1208-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#F2EDE4">
+              <td class="td-num">16</td>
+              <td>09/12/2026</td>
+              <td>Miércoles</td>
+              <td><input type="number" class="inp-imp" id="c6_1209-imp" placeholder="0" min="0" oninput="calc(6)"></td>
+              <td><input type="text" class="inp-ref" id="c6_1209-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c6_1209-est" onchange="calc(6)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c6_1209-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c6_1209-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#FAFAF7">
+              <td class="td-num">17</td>
+              <td>10/12/2026</td>
+              <td>Jueves</td>
+              <td><input type="number" class="inp-imp" id="c6_1210-imp" placeholder="0" min="0" oninput="calc(6)"></td>
+              <td><input type="text" class="inp-ref" id="c6_1210-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c6_1210-est" onchange="calc(6)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c6_1210-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c6_1210-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#F2EDE4">
+              <td class="td-num">18</td>
+              <td>11/12/2026</td>
+              <td>Viernes</td>
+              <td><input type="number" class="inp-imp" id="c6_1211-imp" placeholder="0" min="0" oninput="calc(6)"></td>
+              <td><input type="text" class="inp-ref" id="c6_1211-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c6_1211-est" onchange="calc(6)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c6_1211-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c6_1211-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#FAFAF7">
+              <td class="td-num">19</td>
+              <td>12/12/2026</td>
+              <td>Sábado</td>
+              <td><input type="number" class="inp-imp" id="c6_1212-imp" placeholder="0" min="0" oninput="calc(6)"></td>
+              <td><input type="text" class="inp-ref" id="c6_1212-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c6_1212-est" onchange="calc(6)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c6_1212-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c6_1212-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#EDE8DE">
+              <td class="td-num" style="background:#BBBBBB;color:#fff">20</td>
+              <td style="color:#BBBBBB">13/12/2026</td>
+              <td style="color:#C0392B;font-weight:bold">Domingo</td>
+              <td colspan="4" style="color:#BBBBBB;font-style:italic;text-align:center;font-size:10px">— DESCANSO —</td>
+              <td style="color:#BBBBBB">—</td>
+            </tr><tr style="background:#FAFAF7">
+              <td class="td-num">21</td>
+              <td>14/12/2026</td>
+              <td>Lunes</td>
+              <td><input type="number" class="inp-imp" id="c6_1214-imp" placeholder="0" min="0" oninput="calc(6)"></td>
+              <td><input type="text" class="inp-ref" id="c6_1214-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c6_1214-est" onchange="calc(6)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c6_1214-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c6_1214-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#F2EDE4">
+              <td class="td-num">22</td>
+              <td>15/12/2026</td>
+              <td>Martes</td>
+              <td><input type="number" class="inp-imp" id="c6_1215-imp" placeholder="0" min="0" oninput="calc(6)"></td>
+              <td><input type="text" class="inp-ref" id="c6_1215-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c6_1215-est" onchange="calc(6)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c6_1215-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c6_1215-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#FAFAF7">
+              <td class="td-num">23</td>
+              <td>16/12/2026</td>
+              <td>Miércoles</td>
+              <td><input type="number" class="inp-imp" id="c6_1216-imp" placeholder="0" min="0" oninput="calc(6)"></td>
+              <td><input type="text" class="inp-ref" id="c6_1216-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c6_1216-est" onchange="calc(6)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c6_1216-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c6_1216-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#F2EDE4">
+              <td class="td-num">24</td>
+              <td>17/12/2026</td>
+              <td>Jueves</td>
+              <td><input type="number" class="inp-imp" id="c6_1217-imp" placeholder="0" min="0" oninput="calc(6)"></td>
+              <td><input type="text" class="inp-ref" id="c6_1217-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c6_1217-est" onchange="calc(6)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c6_1217-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c6_1217-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#FAFAF7">
+              <td class="td-num">25</td>
+              <td>18/12/2026</td>
+              <td>Viernes</td>
+              <td><input type="number" class="inp-imp" id="c6_1218-imp" placeholder="0" min="0" oninput="calc(6)"></td>
+              <td><input type="text" class="inp-ref" id="c6_1218-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c6_1218-est" onchange="calc(6)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c6_1218-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c6_1218-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#F2EDE4">
+              <td class="td-num">26</td>
+              <td>19/12/2026</td>
+              <td>Sábado</td>
+              <td><input type="number" class="inp-imp" id="c6_1219-imp" placeholder="0" min="0" oninput="calc(6)"></td>
+              <td><input type="text" class="inp-ref" id="c6_1219-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c6_1219-est" onchange="calc(6)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c6_1219-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c6_1219-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#EDE8DE">
+              <td class="td-num" style="background:#BBBBBB;color:#fff">27</td>
+              <td style="color:#BBBBBB">20/12/2026</td>
+              <td style="color:#C0392B;font-weight:bold">Domingo</td>
+              <td colspan="4" style="color:#BBBBBB;font-style:italic;text-align:center;font-size:10px">— DESCANSO —</td>
+              <td style="color:#BBBBBB">—</td>
+            </tr><tr style="background:#F2EDE4">
+              <td class="td-num">28</td>
+              <td>21/12/2026</td>
+              <td>Lunes</td>
+              <td><input type="number" class="inp-imp" id="c6_1221-imp" placeholder="0" min="0" oninput="calc(6)"></td>
+              <td><input type="text" class="inp-ref" id="c6_1221-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c6_1221-est" onchange="calc(6)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c6_1221-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c6_1221-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#FAFAF7">
+              <td class="td-num">29</td>
+              <td>22/12/2026</td>
+              <td>Martes</td>
+              <td><input type="number" class="inp-imp" id="c6_1222-imp" placeholder="0" min="0" oninput="calc(6)"></td>
+              <td><input type="text" class="inp-ref" id="c6_1222-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c6_1222-est" onchange="calc(6)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c6_1222-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c6_1222-firma" placeholder="Firma"></td>
+            </tr><tr style="background:#F2EDE4">
+              <td class="td-num">30</td>
+              <td>23/12/2026</td>
+              <td>Miércoles</td>
+              <td><input type="number" class="inp-imp" id="c6_1223-imp" placeholder="0" min="0" oninput="calc(6)"></td>
+              <td><input type="text" class="inp-ref" id="c6_1223-ref" placeholder="Nº comprobante"></td>
+              <td><select class="sel-est" id="c6_1223-est" onchange="calc(6)">
+                    <option value="">—</option>
+                    <option value="si">✓ Entregado</option>
+                    <option value="no">✗ No entregado</option>
+                  </select></td>
+              <td><input type="text" class="inp-nota" id="c6_1223-nota" placeholder="Notas..."></td>
+              <td><input type="text" class="inp-firma" id="c6_1223-firma" placeholder="Firma"></td>
+            </tr></tbody>
+    </table>
+  </div>
+  <div class="resumen">
+    <div class="rbox"><div class="rl">TOTAL ENTREGADO</div><div class="rv" id="tot6">0 FCFA</div></div>
+    <div class="rbox"><div class="rl">DÍAS CON ENTREGA</div><div class="rv grn" id="dsi6">0</div></div>
+    <div class="rbox"><div class="rl">DÍAS SIN ENTREGA</div><div class="rv red" id="dno6">0</div></div>
+    <div class="rbox bono" id="bono6" style="grid-column:1/-1">
+      <div class="rl">BONIFICACIÓN MES 6</div>
+      <div class="rv" id="bval6">Pendiente</div>
+    </div>
+  </div>
+</div>
+<div id="toast"></div>
+<script>
+function showTab(n){document.querySelectorAll('.tcontent').forEach(e=>e.classList.remove('active'));document.querySelectorAll('.tbtn').forEach(e=>e.classList.remove('active'));document.getElementById('tab'+n).classList.add('active');document.getElementById('tbtn'+n).classList.add('active');}
+function calc(n){let tot=0,si=0,no=0;document.querySelectorAll('#tab'+n+' .inp-imp').forEach(e=>{tot+=parseFloat(e.value)||0;});document.querySelectorAll('#tab'+n+' .sel-est').forEach(e=>{if(e.value==='si')si++;if(e.value==='no')no++;});document.getElementById('tot'+n).textContent=tot.toLocaleString('es-ES')+' FCFA';document.getElementById('dsi'+n).textContent=si;document.getElementById('dno'+n).textContent=no;let bx=document.getElementById('bono'+n),bv=document.getElementById('bval'+n);if(no===0&&si>0){bv.textContent='✓ +20.000 FCFA';bx.className='rbox bono bono-ok';}else if(no>0){bv.textContent='✗ Sin bonificación';bx.className='rbox bono bono-ko';}else{bv.textContent='Pendiente';bx.className='rbox bono';}}
+function save(){let d={};document.querySelectorAll('input,select').forEach(e=>{if(e.id)d[e.id]=e.value;});localStorage.setItem('fon2026',JSON.stringify(d));let t=document.getElementById('toast');t.textContent='✓ Datos guardados';t.style.opacity='1';setTimeout(()=>t.style.opacity='0',2200);}
+function load(){let raw=localStorage.getItem('fon2026');if(!raw)return;let d=JSON.parse(raw);Object.keys(d).forEach(id=>{let el=document.getElementById(id);if(el)el.value=d[id];});for(let i=1;i<=6;i++)calc(i);}
+window.onload=load;setInterval(save,30000);
+</script>
+</body>
+</html>
