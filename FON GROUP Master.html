@@ -1,0 +1,1162 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<title>FON GROUP</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="FON GROUP">
+<meta name="theme-color" content="#1B2A3B">
+<style>
+:root{
+  --g:#B8952A;--gl:#D4AE4E;--gd:#8B6914;
+  --n:#1B2A3B;--cr:#FAFAF7;--wm:#F2EDE4;
+  --gr:#1E7A3E;--rd:#C0392B;--or:#E67E22;
+  --bl:#2471A3;--pu:#7D3C98;--cy:#148F77;
+  --gy:#888;--lg:#BBB;--yl:#FFFDE8;
+  --rb:#FFF0F0;--wh:#fff
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:Arial,sans-serif;background:var(--wm);color:var(--n);font-size:13px}
+
+/* HEADER */
+.hdr{background:var(--cr);border-bottom:3px solid var(--g);position:sticky;top:0;z-index:300;box-shadow:0 2px 8px rgba(0,0,0,.15)}
+.hdr-top{display:flex;align-items:center;justify-content:space-between;padding:8px 14px}
+.logo{width:160px;height:50px}
+.hdr-btns{display:flex;gap:8px}
+.btn-save{background:var(--g);color:#fff;border:none;padding:7px 14px;border-radius:6px;font-size:11px;font-weight:bold;cursor:pointer}
+.gold-bar{height:2px;background:linear-gradient(90deg,var(--gd),var(--gl),var(--gd))}
+.nav{display:flex;overflow-x:auto;background:var(--n);scrollbar-width:none;padding:0 4px}
+.nav::-webkit-scrollbar{display:none}
+.nb{flex-shrink:0;background:transparent;border:none;color:var(--g);padding:9px 12px;cursor:pointer;font-size:11px;font-weight:bold;border-bottom:3px solid transparent;white-space:nowrap}
+.nb.on{color:#F0D080;border-bottom-color:var(--g)}
+
+/* SECCIONES */
+.sec{display:none;padding:12px}.sec.on{display:block}
+
+/* CARDS */
+.card{background:var(--wh);border-radius:10px;padding:14px;margin-bottom:12px;box-shadow:0 1px 6px rgba(0,0,0,.1);border-left:4px solid var(--g)}
+.ct{font-size:11px;font-weight:bold;color:var(--gy);text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px}
+.fg{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.fi{display:flex;flex-direction:column;gap:4px}.fi.full{grid-column:1/-1}
+label{font-size:10px;font-weight:bold;color:var(--gy);text-transform:uppercase;letter-spacing:.4px}
+input,select,textarea{padding:7px 10px;border:1.5px solid #DDD;border-radius:6px;font-size:12px;color:var(--n);background:var(--wh);width:100%}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--g)}
+.ig{border-color:var(--g)!important;background:var(--yl)!important}
+.ir{border-color:var(--rd)!important;background:var(--rb)!important;color:var(--rd)!important}
+
+/* BOTONES */
+.btn{padding:8px 14px;border:none;border-radius:6px;font-size:12px;font-weight:bold;cursor:pointer}
+.bg{background:var(--g);color:#fff}.bn{background:var(--n);color:var(--gl)}
+.bgr{background:var(--gr);color:#fff}.br{background:var(--rd);color:#fff;font-size:11px;padding:5px 10px}
+.bb{background:var(--bl);color:#fff}.bor{background:var(--or);color:#fff}
+.bpu{background:var(--pu);color:#fff}.bcy{background:var(--cy);color:#fff}
+.btn-row{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+
+/* ITEMS */
+.items{display:flex;flex-direction:column;gap:8px}
+.item{background:var(--wm);border-radius:8px;padding:10px 12px;border:1px solid #DDD}
+.in{font-weight:bold;font-size:13px}.is{font-size:10px;color:var(--gy);margin-top:2px;line-height:1.5}
+.badge{display:inline-block;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:bold}
+.bgold{background:#FEF9E7;color:var(--gd)}.bgreen{background:#D5F5E3;color:var(--gr)}
+.bblue{background:#D6EAF8;color:var(--bl)}.bpu2{background:#E8DAEF;color:var(--pu)}
+.bred{background:#FADBD8;color:var(--rd)}.bgrey{background:#F0F0F0;color:var(--gy)}
+.bcyan{background:#D1F2EB;color:var(--cy)}
+
+.empty{text-align:center;padding:24px;color:var(--lg);font-size:12px}
+.sep{height:1px;background:linear-gradient(90deg,transparent,var(--g),transparent);margin:14px 0}
+
+/* DASHBOARD HERO */
+.dash-hero{background:linear-gradient(135deg,#0D1B2A,#1B2A3B);border-radius:12px;padding:16px;margin-bottom:12px}
+.dash-title{font-size:18px;font-weight:bold;font-family:Georgia,serif;color:#F0D080}
+.dash-sub{font-size:11px;color:var(--lg);margin-top:3px;margin-bottom:14px}
+.dash-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.dash-box{background:rgba(255,255,255,.07);border-radius:8px;padding:12px;text-align:center}
+.dash-val{font-size:20px;font-weight:bold}.dash-lbl{font-size:9px;color:var(--lg);margin-top:3px;text-transform:uppercase}
+
+/* CAJA / BANCO */
+.caja-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:14px}
+.caja-box{background:var(--wh);border-radius:10px;padding:14px;text-align:center;box-shadow:0 2px 6px rgba(0,0,0,.1)}
+.caja-ico{font-size:24px;margin-bottom:6px}
+.caja-lbl{font-size:9px;font-weight:bold;text-transform:uppercase;color:var(--gy);margin-bottom:6px}
+.caja-val{font-size:18px;font-weight:bold}
+.caja-sub{font-size:9px;color:var(--lg);margin-top:3px}
+.pais-card{background:var(--wh);border-radius:10px;padding:12px;margin-bottom:10px;box-shadow:0 1px 4px rgba(0,0,0,.08);border-top:3px solid var(--bl)}
+.pais-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.pais-nom{font-weight:bold;font-size:13px}
+.pais-stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;font-size:11px}
+.ps{background:var(--wm);border-radius:6px;padding:6px 8px;text-align:center}
+.ps-l{font-size:9px;color:var(--gy);margin-bottom:2px;text-transform:uppercase}
+.ps-v{font-weight:bold}
+
+/* ORGANIGRAMA */
+.org-wrap{overflow-x:auto;padding:10px 0}
+.org-level{display:flex;gap:12px;justify-content:center;margin-bottom:4px;flex-wrap:wrap}
+.org-node{border-radius:10px;padding:10px 14px;text-align:center;min-width:120px;font-size:11px}
+.on-ceo{background:linear-gradient(135deg,var(--gd),var(--g));color:#fff;min-width:150px}
+.on-co{background:linear-gradient(135deg,var(--pu),#9B59B6);color:#fff}
+.on-adm{background:var(--bl);color:#fff}
+.on-cnd{background:var(--gr);color:#fff}
+.on-fam{background:var(--gy);color:#fff;font-size:10px}
+.on-neg{background:var(--or);color:#fff}
+.on-emp{background:var(--cy);color:#fff}
+.org-title{font-weight:bold}.org-sub{font-size:9px;opacity:.8;margin-top:2px}
+.org-line{width:1px;height:20px;background:var(--g);margin:0 auto}
+
+/* NEGOCIO */
+.neg-card{background:var(--wh);border-radius:12px;padding:14px;margin-bottom:12px;box-shadow:0 2px 8px rgba(0,0,0,.1);border-top:4px solid var(--g)}
+.neg-stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:10px}
+.ns{background:var(--wm);border-radius:8px;padding:8px;text-align:center}
+.ns-l{font-size:9px;color:var(--gy);font-weight:bold;text-transform:uppercase;margin:3px 0}
+.ns-v{font-size:14px;font-weight:bold}
+.roi-box{background:linear-gradient(135deg,#0D1B2A,#1B2A3B);border-radius:10px;padding:12px;margin-top:10px;color:#fff}
+.roi-t{color:var(--gl);font-weight:bold;font-size:11px;margin-bottom:8px}
+.roi-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;font-size:11px}
+.roi-k{color:var(--lg)}.roi-v{color:var(--gl);font-weight:bold}
+.roi-ok{color:#90EE90;font-size:13px;font-weight:bold}.roi-bad{color:#FF9999}
+.prog-wrap{margin-top:8px}
+.prog-lbl{font-size:10px;color:var(--gy);margin-bottom:3px;display:flex;justify-content:space-between}
+.prog-bar{background:rgba(255,255,255,.1);border-radius:4px;height:10px;overflow:hidden}
+.prog-fill{background:linear-gradient(90deg,var(--gd),var(--g));height:100%;border-radius:4px}
+.prog-ok{background:linear-gradient(90deg,var(--gr),#27AE60)}
+
+/* TABLA */
+.twrap{overflow-x:auto;border-radius:8px;box-shadow:0 1px 4px rgba(0,0,0,.1);margin-bottom:12px}
+table.t{width:100%;border-collapse:collapse;background:var(--wh)}
+table.t th{background:var(--n);color:#F0D080;font-size:9px;font-weight:bold;padding:7px 6px;text-align:center;border-right:1px solid #2D4A6B}
+table.t td{padding:6px 8px;font-size:11px;border-bottom:.5px solid #EEE;vertical-align:middle}
+table.t tr:nth-child(even) td{background:var(--wm)}
+
+/* CONTROL */
+table.ct{width:100%;border-collapse:collapse;background:var(--wh);min-width:600px}
+table.ct th{background:var(--n);color:#F0D080;font-size:9px;font-weight:bold;padding:7px 5px;text-align:center;border-right:1px solid #2D4A6B;line-height:1.3}
+table.ct td{padding:4px;font-size:11px;text-align:center;border-right:1px solid #EEE;border-bottom:1px solid #EEE;vertical-align:middle}
+.td-n{font-weight:bold;background:var(--wm);color:var(--n);width:28px}
+.inp-hr{width:58px;padding:4px;border:1px solid #DDD;border-radius:4px;font-size:10px;text-align:center;background:#F8F8FF}
+.inp-im{width:80px;padding:5px;border:1.5px solid var(--g);border-radius:5px;font-size:12px;font-weight:bold;text-align:right;background:var(--yl)}
+.inp-fi{width:78px;padding:4px;border:1.5px solid #5B9BD5;border-radius:5px;font-size:10px;background:#EEF4FF;text-align:center}
+.inp-ga{width:70px;padding:5px;border:1.5px solid var(--rd);border-radius:5px;font-size:12px;font-weight:bold;text-align:right;background:var(--rb);color:var(--rd)}
+.inp-de{width:110px;padding:4px;border:1px solid #E8A0A0;border-radius:4px;font-size:9.5px;background:var(--rb)}
+.ctabs{display:flex;overflow-x:auto;gap:4px;margin-bottom:10px;scrollbar-width:none}
+.ctabs::-webkit-scrollbar{display:none}
+.ctab{flex-shrink:0;background:var(--wm);border:1px solid #DDD;border-radius:6px;padding:6px 10px;cursor:pointer;font-size:10px;font-weight:bold;color:var(--gy);white-space:nowrap}
+.ctab.on{background:var(--n);color:var(--gl);border-color:var(--n)}
+
+/* RESUMEN CICLO */
+.rg{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin:12px 0}
+.rc{background:var(--wh);border-radius:10px;padding:12px 8px;text-align:center;box-shadow:0 2px 6px rgba(0,0,0,.1)}
+.rc-l{font-size:9px;font-weight:bold;text-transform:uppercase;color:var(--gy);margin-bottom:5px}
+.rc-v{font-size:17px;font-weight:bold}.rc-s{font-size:8px;color:var(--lg);margin-top:2px}
+.rg-bono{grid-column:1/-1;border-top:3px solid var(--g)}
+.bono-ok{background:#F0FFF0;border-top-color:var(--gr)!important}.bono-ok .rc-v{color:var(--gr)}
+.bono-ko{background:#FFF0F0;border-top-color:var(--rd)!important}.bono-ko .rc-v{color:var(--rd)}
+
+/* PAGOS */
+.pay-card{background:linear-gradient(135deg,#0D1B2A,#163050);border-radius:10px;padding:14px;margin-bottom:12px;color:#fff}
+.pay-t{color:var(--gl);font-weight:bold;font-size:12px;margin-bottom:10px}
+.pay-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:11px}
+.pay-k{color:rgba(255,255,255,.65)}.pay-v{color:#F0D080;font-weight:bold}
+.pay-total{color:#90EE90;font-size:18px;font-weight:bold;text-align:center;padding:10px;background:rgba(255,255,255,.07);border-radius:8px;margin-top:10px}
+.pay-total-lbl{font-size:9px;color:var(--lg);text-transform:uppercase;margin-bottom:4px;text-align:center}
+
+/* IA */
+.ia-box{background:linear-gradient(135deg,#0D1B2A,#1B2A3B);border-radius:12px;padding:16px;margin-bottom:12px;border:1px solid var(--g)}
+.ia-t{color:var(--gl);font-size:13px;font-weight:bold;margin-bottom:2px}
+.ia-badge{display:inline-block;background:var(--g);color:#fff;font-size:9px;padding:2px 8px;border-radius:10px;margin-bottom:8px;font-weight:bold}
+.ia-s{color:var(--lg);font-size:10px;margin-bottom:12px}
+.ia-resp{background:rgba(255,255,255,.05);border-radius:8px;padding:12px;color:#fff;font-size:12px;line-height:1.8;white-space:pre-wrap;max-height:400px;overflow-y:auto}
+.ia-inp{background:rgba(255,255,255,.1);border:1px solid var(--g);border-radius:8px;color:#fff;padding:8px 12px;width:100%;font-size:12px;margin-bottom:8px}
+.ia-inp::placeholder{color:rgba(255,255,255,.4)}
+.ia-chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+.ia-chip{background:rgba(184,149,42,.2);border:1px solid var(--g);color:var(--gl);padding:5px 12px;border-radius:16px;font-size:10px;cursor:pointer;font-weight:bold}
+.ia-loading{color:var(--gl);text-align:center;padding:16px;font-style:italic}
+.ia-section-title{color:var(--gl);font-size:11px;font-weight:bold;margin:12px 0 6px;text-transform:uppercase;letter-spacing:.5px}
+
+/* SAL EDIT */
+.sal-box{background:var(--yl);border:1.5px solid var(--g);border-radius:8px;padding:10px;margin-top:8px;font-size:11px}
+.sal-edit-box{background:#EEF4FF;border:1.5px solid var(--bl);border-radius:8px;padding:12px;margin-top:8px}
+
+/* ALERT */
+.alert-box{background:#FFF8E8;border:1px solid var(--g);border-radius:8px;padding:10px;margin-bottom:8px;font-size:11px}
+
+#toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--n);color:var(--gl);padding:9px 22px;border-radius:20px;font-size:12px;opacity:0;transition:opacity .3s;z-index:9999;border:1px solid var(--g);pointer-events:none;white-space:nowrap}
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <div class="hdr-top">
+    <svg class="logo" viewBox="0 0 420 130" xmlns="http://www.w3.org/2000/svg">
+      <rect width="420" height="130" fill="#FAFAF7"/>
+      <circle cx="65" cy="65" r="54" fill="none" stroke="#1B2A3B" stroke-width="2.5"/>
+      <circle cx="65" cy="65" r="43" fill="none" stroke="#1B2A3B" stroke-width=".8"/>
+      <polygon points="65,11 73,59 65,65 57,59" fill="#1B2A3B"/>
+      <polygon points="65,119 73,71 65,65 57,71" fill="#1B2A3B"/>
+      <polygon points="119,65 71,73 65,65 71,57" fill="#1B2A3B"/>
+      <polygon points="11,65 59,57 65,65 59,73" fill="#1B2A3B"/>
+      <circle cx="65" cy="65" r="9" fill="#1B2A3B"/>
+      <circle cx="65" cy="65" r="4.5" fill="#FAFAF7"/>
+      <text x="138" y="72" font-family="Georgia,serif" font-size="62" font-weight="bold" fill="#B8952A" letter-spacing="2">FON</text>
+      <line x1="138" y1="82" x2="410" y2="82" stroke="#B8952A" stroke-width="1.5"/>
+      <text x="138" y="112" font-family="Georgia,serif" font-size="40" font-weight="bold" fill="#1B2A3B" letter-spacing="4">GROUP</text>
+      <line x1="138" y1="120" x2="410" y2="120" stroke="#B8952A" stroke-width="1.5"/>
+      <text x="140" y="130" font-family="Arial,sans-serif" font-size="11.5" fill="#888">Familia. Confianza. Futuro.</text>
+    </svg>
+    <div class="hdr-btns">
+      <button class="btn btn-save" onclick="APP.save()">Guardar</button>
+    </div>
+  </div>
+  <div class="gold-bar"></div>
+  <div class="nav" id="main-nav">
+    <button class="nb on" onclick="APP.ir('dash')" id="nb-dash">Inicio</button>
+    <button class="nb" onclick="APP.ir('caja')" id="nb-caja">Caja/Banco</button>
+    <button class="nb" onclick="APP.ir('org')" id="nb-org">Organigrama</button>
+    <button class="nb" onclick="APP.ir('ubis')" id="nb-ubis">Ubicaciones</button>
+    <button class="nb" onclick="APP.ir('negs')" id="nb-negs">Negocios</button>
+    <button class="nb" onclick="APP.ir('ems')" id="nb-ems">Empleados</button>
+    <button class="nb" onclick="APP.ir('ctrl')" id="nb-ctrl">Control</button>
+    <button class="nb" onclick="APP.ir('pagos')" id="nb-pagos">Pagos</button>
+    <button class="nb" onclick="APP.ir('fin')" id="nb-fin">Finanzas</button>
+    <button class="nb" onclick="APP.ir('ia')" id="nb-ia">Asesor IA</button>
+  </div>
+</div>
+
+<!-- DASHBOARD -->
+<div class="sec on" id="sec-dash">
+  <div class="dash-hero">
+    <div class="dash-title">FON GROUP</div>
+    <div class="dash-sub">Familia. Confianza. Futuro. - Malabo, Guinea Ecuatorial</div>
+    <div class="dash-grid">
+      <div class="dash-box"><div class="dash-val" id="d-ing" style="color:var(--gl)">0 FCFA</div><div class="dash-lbl">Ingresos totales</div></div>
+      <div class="dash-box"><div class="dash-val" id="d-net" style="color:#90EE90">0 FCFA</div><div class="dash-lbl">Neto FON GROUP</div></div>
+      <div class="dash-box"><div class="dash-val" id="d-cnd" style="color:#87CEEB">0</div><div class="dash-lbl">Conductores activos</div></div>
+      <div class="dash-box"><div class="dash-val" id="d-neg" style="color:var(--gl)">0</div><div class="dash-lbl">Negocios activos</div></div>
+    </div>
+  </div>
+  <div id="d-alerts"></div>
+  <div class="card">
+    <div class="ct">Accesos rapidos</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+      <button class="btn bn" style="padding:12px" onclick="APP.ir('caja')">Caja y Banco</button>
+      <button class="btn bb" style="padding:12px" onclick="APP.ir('ctrl')">Control Entregas</button>
+      <button class="btn bor" style="padding:12px" onclick="APP.ir('pagos')">Pagos Empleados</button>
+      <button class="btn bpu" style="padding:12px" onclick="APP.ir('ia')">Asesor IA</button>
+    </div>
+  </div>
+</div>
+
+<!-- CAJA Y BANCO -->
+<div class="sec" id="sec-caja">
+  <div class="card">
+    <div class="ct">Resumen global de caja y banco</div>
+    <div class="caja-grid" id="caja-global"></div>
+    <div id="caja-paises"></div>
+  </div>
+  <div class="card">
+    <div class="ct">Movimientos recientes</div>
+    <div class="twrap">
+      <table class="t">
+        <thead><tr><th>Fecha</th><th>Tipo</th><th>Pais/Ciudad</th><th>Negocio</th><th>Importe FCFA</th><th>Saldo tras mov.</th><th>Descripcion</th></tr></thead>
+        <tbody id="caja-movs"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ORGANIGRAMA -->
+<div class="sec" id="sec-org">
+  <div class="card"><div class="ct">Organigrama FON GROUP</div><div class="org-wrap" id="org-cont"></div></div>
+</div>
+
+<!-- UBICACIONES -->
+<div class="sec" id="sec-ubis">
+  <div class="card">
+    <div class="ct">Anadir ubicacion / pais</div>
+    <div class="fg">
+      <div class="fi"><label>Ciudad *</label><input id="u-c" placeholder="Malabo, Bata, Madrid..."></div>
+      <div class="fi"><label>Pais *</label>
+        <select id="u-p">
+          <option value="Guinea Ecuatorial">Guinea Ecuatorial</option>
+          <option value="Espana">Espana</option>
+          <option value="Otro">Otro</option>
+        </select>
+      </div>
+      <div class="fi"><label>Moneda</label>
+        <select id="u-mon">
+          <option value="FCFA">FCFA (Franco CFA)</option>
+          <option value="EUR">EUR (Euro)</option>
+          <option value="USD">USD (Dolar)</option>
+        </select>
+      </div>
+      <div class="fi"><label>Region</label><input id="u-r" placeholder="Bioko Norte..."></div>
+      <div class="fi"><label>Responsable</label><input id="u-res" placeholder="Nombre responsable"></div>
+      <div class="fi"><label>Cuenta bancaria (opcional)</label><input id="u-cta" placeholder="No cuenta..."></div>
+      <div class="fi full"><label>Notas</label><textarea id="u-n" rows="2"></textarea></div>
+    </div>
+    <div class="btn-row"><button class="btn bg" onclick="APP.addUbi()">Anadir ubicacion</button></div>
+  </div>
+  <div class="sep"></div>
+  <div id="lista-ubis"></div>
+</div>
+
+<!-- NEGOCIOS -->
+<div class="sec" id="sec-negs">
+  <div class="card">
+    <div class="ct">Anadir negocio / inversion</div>
+    <div class="fg">
+      <div class="fi"><label>Nombre *</label><input id="neg-n" placeholder="Taxi Malabo, Airbnb Malabo..."></div>
+      <div class="fi"><label>Tipo</label>
+        <select id="neg-t">
+          <option value="taxi">Taxi / Transporte</option>
+          <option value="bus">Autobus</option>
+          <option value="abaceria">Abaceria / Comercio</option>
+          <option value="airbnb">Airbnb / Alquiler</option>
+          <option value="inmueble">Inmueble / Casa</option>
+          <option value="inversion">Inversion financiera</option>
+          <option value="otro">Otro</option>
+        </select>
+      </div>
+      <div class="fi"><label>Ubicacion</label><select id="neg-u"><option value="">-- Selecciona --</option></select></div>
+      <div class="fi"><label>Fecha inicio</label><input id="neg-f" type="date"></div>
+      <div class="fi"><label>Inversion total (moneda local)</label><input id="neg-inv" type="number" placeholder="0" class="ig"></div>
+      <div class="fi"><label>Ingreso mensual estimado</label><input id="neg-ing" type="number" placeholder="0" class="ig"></div>
+      <div class="fi"><label>Gasto mensual estimado</label><input id="neg-gas" type="number" placeholder="0" class="ir"></div>
+      <div class="fi full"><label>Como funciona / descripcion</label><textarea id="neg-d" rows="3" placeholder="Describe como funciona, quien lo lleva, que entrega cada dia..."></textarea></div>
+    </div>
+    <div class="btn-row">
+      <button class="btn bg" onclick="APP.addNeg()">Anadir negocio</button>
+      <button class="btn bor" onclick="APP.iaConsejosNeg()">Pedir consejos a la IA</button>
+    </div>
+  </div>
+  <div class="sep"></div>
+  <div id="lista-negs"></div>
+</div>
+
+<!-- EMPLEADOS -->
+<div class="sec" id="sec-ems">
+  <div class="card">
+    <div class="ct">Anadir miembro / empleado</div>
+    <div class="fg">
+      <div class="fi"><label>Nombre *</label><input id="em-n" placeholder="Nombre"></div>
+      <div class="fi"><label>Apellidos *</label><input id="em-a" placeholder="Apellidos"></div>
+      <div class="fi"><label>DIP / Pasaporte</label><input id="em-d" placeholder="Numero documento"></div>
+      <div class="fi"><label>Fecha nacimiento</label><input id="em-f" type="date"></div>
+      <div class="fi"><label>Rol</label>
+        <select id="em-r" onchange="APP.toggleSalForm()">
+          <option value="ceo">CEO & Founder</option>
+          <option value="cofundadora">Co-Fundadora & Socia</option>
+          <option value="familiar">Socio Familiar (Heredero)</option>
+          <option value="admin">Administrador Local</option>
+          <option value="conductor">Conductor</option>
+          <option value="empleado">Empleado</option>
+        </select>
+      </div>
+      <div class="fi"><label>Estado</label>
+        <select id="em-est">
+          <option value="activo">Activo</option>
+          <option value="inactivo">Inactivo / Baja</option>
+        </select>
+      </div>
+      <div class="fi"><label>Ubicacion</label><select id="em-u"><option value="">-- Selecciona --</option></select></div>
+      <div class="fi"><label>Negocio asignado</label><select id="em-neg"><option value="">-- Selecciona --</option></select></div>
+      <div class="fi"><label>Telefono</label><input id="em-t" placeholder="+240 ..."></div>
+      <div class="fi full"><label>Notas / Responsabilidades</label><textarea id="em-not" rows="2" placeholder="Descripcion del cargo..."></textarea></div>
+    </div>
+    <div id="sal-form-new" style="display:none">
+      <div class="sep"></div>
+      <div class="ct">Estructura salarial</div>
+      <div class="fg">
+        <div class="fi"><label>Salario fijo (FCFA/mes)</label><input id="em-sal" type="number" placeholder="0" class="ig"></div>
+        <div class="fi"><label>Bonus por conductor cumplido</label><input id="em-bonc" type="number" placeholder="5000" value="5000" class="ig"></div>
+        <div class="fi"><label>Bonus por objetivo negocio</label><input id="em-bonn" type="number" placeholder="0" class="ig"></div>
+        <div class="fi"><label>Descripcion bonus negocio</label><input id="em-bonnd" placeholder="Ej: si supera X FCFA..."></div>
+      </div>
+    </div>
+    <div class="btn-row"><button class="btn bg" onclick="APP.addEm()">Anadir miembro</button></div>
+  </div>
+  <div class="sep"></div>
+  <div id="lista-ems"></div>
+</div>
+
+<!-- CONTROL -->
+<div class="sec" id="sec-ctrl"><div id="ctrl-content"></div></div>
+
+<!-- PAGOS -->
+<div class="sec" id="sec-pagos"><div id="pagos-content"></div></div>
+
+<!-- FINANZAS -->
+<div class="sec" id="sec-fin">
+  <div class="card">
+    <div class="ct">Registrar movimiento</div>
+    <div class="fg">
+      <div class="fi"><label>Tipo</label>
+        <select id="fin-t"><option value="ingreso">Ingreso</option><option value="gasto">Gasto</option></select>
+      </div>
+      <div class="fi"><label>Importe</label><input id="fin-i" type="number" placeholder="0" class="ig"></div>
+      <div class="fi"><label>Moneda</label>
+        <select id="fin-mon">
+          <option value="FCFA">FCFA</option>
+          <option value="EUR">EUR</option>
+          <option value="USD">USD</option>
+        </select>
+      </div>
+      <div class="fi"><label>Categoria</label>
+        <select id="fin-c">
+          <option value="taxi">Taxi / Transporte</option>
+          <option value="salario">Salario empleado</option>
+          <option value="mant">Mantenimiento</option>
+          <option value="inv">Inversion</option>
+          <option value="airbnb">Airbnb / Alquiler</option>
+          <option value="abaceria">Abaceria</option>
+          <option value="otro">Otro</option>
+        </select>
+      </div>
+      <div class="fi"><label>Pais / Ubicacion</label><select id="fin-ubi"><option value="">-- General --</option></select></div>
+      <div class="fi"><label>Negocio</label><select id="fin-n"><option value="">-- General FON GROUP --</option></select></div>
+      <div class="fi"><label>Fecha</label><input id="fin-f" type="date"></div>
+      <div class="fi"><label>Referencia</label><input id="fin-r" placeholder="No justificante..."></div>
+      <div class="fi full"><label>Descripcion</label><input id="fin-d" placeholder="Descripcion..."></div>
+    </div>
+    <div class="btn-row"><button class="btn bg" onclick="APP.addMov()">Registrar</button></div>
+  </div>
+  <div id="fin-res"></div>
+  <div class="sep"></div>
+  <div class="twrap">
+    <table class="t">
+      <thead><tr><th>Fecha</th><th>Tipo</th><th>Cat.</th><th>Pais</th><th>Negocio</th><th>Importe</th><th>Moneda</th><th>Ref.</th><th>Desc.</th><th>X</th></tr></thead>
+      <tbody id="fin-tbody"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- IA AUTONOMA -->
+<div class="sec" id="sec-ia">
+  <div class="ia-box">
+    <div class="ia-t">Asesor IA - FON GROUP</div>
+    <div class="ia-badge">EXPERTO EN GESTION Y NEGOCIOS - AUTONOMO</div>
+    <div class="ia-s">Analiza tus datos en tiempo real. Puedo modificar el sistema, anadir empleados, crear negocios y mas. Pregunta lo que necesites.</div>
+
+    <div class="ia-section-title">Acciones rapidas</div>
+    <div class="ia-chips">
+      <button class="ia-chip" onclick="APP.pregIA('Dame un resumen ejecutivo completo de FON GROUP con todos los datos actuales, recomendaciones y proximos pasos.')">Resumen ejecutivo</button>
+      <button class="ia-chip" onclick="APP.pregIA('Analiza la rentabilidad de cada negocio. Calcula el ROI real, tiempo de recuperacion y recomienda que mejorar.')">Analisis rentabilidad</button>
+      <button class="ia-chip" onclick="APP.pregIA('Cuando deberia subir la tarifa de entrega diaria del taxi? A cuanto? Justifica con datos.')">Subir tarifa taxi?</button>
+      <button class="ia-chip" onclick="APP.pregIA('Que negocio deberia abrir primero en Malabo: abaceria, autobuses o Airbnb? Analiza pros, contras e inversion necesaria.')">Proximo negocio</button>
+      <button class="ia-chip" onclick="APP.pregIA('Analiza la estructura salarial de FON GROUP. Es justa? Como deberia evolucionar?')">Analisis salarios</button>
+      <button class="ia-chip" onclick="APP.pregIA('Dame un plan de expansion a Bata: que negocios, cuanto capital necesito, en cuanto tiempo y como organizarlo.')">Plan expansion Bata</button>
+      <button class="ia-chip" onclick="APP.pregIA('Analiza los riesgos de FON GROUP y dame un plan de mitigacion para cada uno.')">Analisis riesgos</button>
+      <button class="ia-chip" onclick="APP.pregIA('Como puedo optimizar el flujo de caja de FON GROUP este mes? Dame acciones concretas.')">Optimizar caja</button>
+      <button class="ia-chip" onclick="APP.pregIA('Evalua el rendimiento de Raimundo como conductor. Esta cumpliendo? Que recomiendas?')">Evaluar Raimundo</button>
+      <button class="ia-chip" onclick="APP.pregIA('Que inveriones deberia hacer en Espana? Considera el perfil de FON GROUP y los recursos disponibles.')">Inversiones Espana</button>
+    </div>
+
+    <div class="ia-section-title">Pregunta libre</div>
+    <textarea class="ia-inp" id="ia-q" rows="3" placeholder="Escribe tu pregunta aqui... Puedes pedirme que analice datos, recomiende acciones, explique conceptos de negocio o ayude con decisiones empresariales." style="resize:none"></textarea>
+    <div class="btn-row">
+      <button class="btn bg" onclick="APP.pregIA()">Consultar asesor</button>
+      <button class="btn bn" style="font-size:11px;padding:6px 12px" onclick="APP.limpIA()">Limpiar</button>
+    </div>
+    <div id="ia-resp" style="display:none;margin-top:12px"></div>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script>
+var APP = (function(){
+'use strict';
+
+var KEY = 'fon_v4';
+var GR='#1E7A3E', RD='#C0392B', OR='#E67E22', GY='#888', G='#B8952A', GL='#D4AE4E', N='#1B2A3B';
+
+// ── DB ──────────────────────────────────────────────────────
+function getDB(){
+  try{
+    var r=localStorage.getItem(KEY);
+    var d=r?JSON.parse(r):null;
+    if(!d)d=initDB();
+    d.ubis=d.ubis||[];d.negs=d.negs||[];d.ems=d.ems||[];
+    d.movs=d.movs||[];d.conds=d.conds||[];d.ciclos=d.ciclos||{};
+    return d;
+  }catch(e){return initDB();}
+}
+function setDB(d){try{localStorage.setItem(KEY,JSON.stringify(d));}catch(e){}}
+
+function initDB(){
+  return{
+    ubis:[
+      {id:'u_mlb',ciudad:'Malabo',pais:'Guinea Ecuatorial',mon:'FCFA',region:'Bioko Norte',res:'Antonio Aseko',cta:'39360015448',notas:'Sede principal FON GROUP. Ecobank GQ.'},
+      {id:'u_esp',ciudad:'Madrid',pais:'Espana',mon:'EUR',region:'',res:'Oscar Antonio Ondo',cta:'',notas:'Base en Espana. Operaciones y coordinacion.'}
+    ],
+    negs:[{id:'n_taxi',nom:'Taxi Malabo',tipo:'taxi',ubi:'u_mlb',fi:'2026-06-27',inv:3280000,ing:450000,gas:150000,desc:'Toyota Avensis BS-118-O. Conductor entrega 15.000 FCFA/dia minimo a FON GROUP.',activo:true}],
+    ems:[
+      {id:'e_oscar',nom:'Oscar Antonio',ape:'Ondo Mikue',dip:'000169790',fn:'1994-06-05',rol:'ceo',est:'activo',ubi:'u_mlb',neg:'',sal:0,bonc:0,bonn:0,bonnd:'',tel:'+34 631 090 306',not:'CEO & Founder. Economista. B/KM5, Malabo, Bioko Norte.'},
+      {id:'e_samira',nom:'Ines Nchama',ape:'Ndong Ada',dip:'F0191551',fn:'1993-04-09',rol:'cofundadora',est:'activo',ubi:'',neg:'',sal:0,bonc:0,bonn:0,bonnd:'',tel:'',not:'Co-Fundadora & Socia. Pasaporte GNQ F0191551.'},
+      {id:'e_javier',nom:'Javier',ape:'Ondo Nchama',dip:'P10084099',fn:'2010-09-12',rol:'familiar',est:'activo',ubi:'',neg:'',sal:0,bonc:0,bonn:0,bonnd:'',tel:'',not:'Socio Familiar (Heredero). Hijo de Oscar y Samira.'},
+      {id:'e_asha',nom:'Asha Maye',ape:'Ondo Ndong',dip:'P10136107',fn:'2025-05-07',rol:'familiar',est:'activo',ubi:'',neg:'',sal:0,bonc:0,bonn:0,bonnd:'',tel:'',not:'Socia Familiar (Heredera). Hija de Oscar y Samira. Nacida en Madrid.'},
+      {id:'e_antonio',nom:'Antonio Aseko',ape:'Otto Ayecaba',dip:'000171696',fn:'1997-11-29',rol:'admin',est:'activo',ubi:'u_mlb',neg:'n_taxi',sal:50000,bonc:5000,bonn:0,bonnd:'',tel:'',not:'Administrador Local Malabo. Responsable de operaciones, conductores y cobro diario.'},
+      {id:'e_raimundo',nom:'Raimundo',ape:'Olivera Castano',dip:'000170836',fn:'',rol:'conductor',est:'activo',ubi:'u_mlb',neg:'n_taxi',sal:0,bonc:0,bonn:0,bonnd:'',tel:'',not:'Conductor Toyota Avensis BS-118-O. Entrega minimo 15.000 FCFA/dia a FON GROUP.'}
+    ],
+    conds:[{id:'c_raim',emId:'e_raimundo',nom:'Raimundo Olivera Castano',dip:'000170836',mat:'BS-118-O',coche:'Toyota Avensis 1.8',fi:'2026-06-27',ed:15000,bon:20000,activo:true,ciclos:gCiclos('2026-06-27',6)}],
+    movs:[
+      {id:'m1',tipo:'gasto',cat:'inv',ubi:'u_mlb',neg:'n_taxi',imp:3280000,mon:'FCFA',fecha:'2026-06-01',ref:'INV-001',desc:'Inversion inicial taxi: compra en Espana + envio + tramites Malabo (~5.000 EUR)'},
+      {id:'m2',tipo:'ingreso',cat:'taxi',ubi:'u_mlb',neg:'n_taxi',imp:10000,mon:'FCFA',fecha:'2026-06-29',ref:'S86CHDP261800520',desc:'Primer ingreso Ecobank. Dia extra 26/06. Neto: 10.000 FCFA tras gasto 2.000 FCFA'},
+      {id:'m3',tipo:'ingreso',cat:'taxi',ubi:'u_mlb',neg:'n_taxi',imp:15000,mon:'FCFA',fecha:'2026-06-29',ref:'',desc:'Dia 1 oficial 27/06. Raimundo entrego 15.000 FCFA.'}
+    ],
+    ciclos:{'c_raim_0':{'c_raim_0_2026-06-27-im':'15000'}}
+  };
+}
+
+// ── CICLOS ──────────────────────────────────────────────────
+function gCiclos(fs,num){
+  var p=fs.split('-'),cur=new Date(+p[0],+p[1]-1,+p[2]),res=[];
+  for(var c=0;c<num;c++){
+    var labs=[],tmp=new Date(cur.getTime());
+    while(labs.length<30){if(tmp.getDay()!==0)labs.push(fd(tmp));tmp.setDate(tmp.getDate()+1);}
+    tmp.setDate(tmp.getDate()-1);while(tmp.getDay()===0)tmp.setDate(tmp.getDate()-1);
+    res.push({num:c+1,ini:labs[0],fin:fd(tmp),labs:labs});
+    cur=new Date(tmp.getTime());cur.setDate(cur.getDate()+1);
+    while(cur.getDay()===0)cur.setDate(cur.getDate()+1);
+  }
+  return res;
+}
+
+// ── UTILS ───────────────────────────────────────────────────
+function fd(d){return d.getFullYear()+'-'+pa(d.getMonth()+1)+'-'+pa(d.getDate());}
+function pa(n){return n<10?'0'+n:''+n;}
+function fes(s){if(!s)return '-';var p=s.split('-');return p[2]+'/'+p[1]+'/'+p[0];}
+function fn(n){return(Math.round(n||0)).toLocaleString('es-ES');}
+function sem(s){if(!s)return '';var p=s.split('-');return['Dom','Lun','Mar','Mie','Jue','Vie','Sab'][new Date(+p[0],+p[1]-1,+p[2]).getDay()];}
+function uid(){return '_'+Math.random().toString(36).slice(2,9);}
+function g(id){return document.getElementById(id);}
+function sv(id,v){var e=g(id);if(e)e.textContent=v;}
+function ubNom(id,d){var u=(d.ubis||[]).find(function(u){return u.id===id;});return u?u.ciudad:'';}
+function negNom(id,d){var n=(d.negs||[]).find(function(n){return n.id===id;});return n?n.nom:'';}
+function ubiMon(id,d){var u=(d.ubis||[]).find(function(u){return u.id===id;});return u?u.mon:'FCFA';}
+
+function toast(msg){
+  var t=g('toast');if(!t)return;
+  t.textContent=msg;t.style.opacity='1';
+  setTimeout(function(){t.style.opacity='0';},2500);
+}
+
+function save(){
+  var d=getDB();
+  document.querySelectorAll('[data-cid]').forEach(function(el){
+    var cid=el.getAttribute('data-cid');
+    if(!d.ciclos[cid])d.ciclos[cid]={};
+    if(el.id)d.ciclos[cid][el.id]=el.value;
+  });
+  setDB(d);toast('Guardado');updDash();
+}
+
+// ── NAV ─────────────────────────────────────────────────────
+function ir(sec){
+  document.querySelectorAll('.sec').forEach(function(e){e.classList.remove('on');});
+  document.querySelectorAll('.nb').forEach(function(e){e.classList.remove('on');});
+  var s=g('sec-'+sec),b=g('nb-'+sec);
+  if(s)s.classList.add('on');if(b)b.classList.add('on');
+  if(sec==='dash')updDash();
+  if(sec==='caja')rCaja();
+  if(sec==='org')rOrg();
+  if(sec==='ubis')rUbis();
+  if(sec==='negs')rNegs();
+  if(sec==='ems')rEms();
+  if(sec==='ctrl')rCtrl();
+  if(sec==='pagos')rPagos();
+  if(sec==='fin')rFin();
+}
+
+// ── DASHBOARD ───────────────────────────────────────────────
+function updDash(){
+  var d=getDB(),ing=0,gas=0;
+  d.movs.forEach(function(m){if(m.mon==='FCFA'){if(m.tipo==='ingreso')ing+=m.imp;else gas+=m.imp;}});
+  sv('d-ing',fn(ing)+' FCFA');sv('d-net',fn(ing-gas)+' FCFA');
+  sv('d-cnd',d.conds.filter(function(c){return c.activo;}).length);
+  sv('d-neg',d.negs.filter(function(n){return n.activo;}).length);
+  var al='';
+  d.negs.forEach(function(neg){
+    var nm=(neg.ing||0)-(neg.gas||0);
+    if(nm>0&&neg.inv>0){var m=Math.ceil(neg.inv/nm);al+='<div class="alert-box">'+neg.nom+': Recuperas la inversion en <b>'+m+' meses</b> ('+fn(nm)+' neto/mes)</div>';}
+  });
+  var ea=g('d-alerts');if(ea)ea.innerHTML=al;
+}
+
+// ── CAJA Y BANCO ────────────────────────────────────────────
+function rCaja(){
+  var d=getDB();
+  var totalIng=0,totalGas=0,saldo=0;
+  var byPais={};
+
+  d.movs.forEach(function(m){
+    var ubiId=m.ubi||'_gen';
+    if(!byPais[ubiId])byPais[ubiId]={ing:0,gas:0,mon:'FCFA',movs:[]};
+    var ubi=d.ubis.find(function(u){return u.id===ubiId;});
+    byPais[ubiId].mon=ubi?ubi.mon:m.mon||'FCFA';
+    byPais[ubiId].movs.push(m);
+    if(m.mon==='FCFA'){
+      if(m.tipo==='ingreso'){byPais[ubiId].ing+=m.imp;totalIng+=m.imp;}
+      else{byPais[ubiId].gas+=m.imp;totalGas+=m.imp;}
+    }
+  });
+  saldo=totalIng-totalGas;
+
+  var cg=g('caja-global');
+  if(cg)cg.innerHTML=
+    '<div class="caja-box" style="border-top:3px solid var(--g)"><div class="caja-ico">+</div><div class="caja-lbl">Total Ingresos (FCFA)</div><div class="caja-val" style="color:var(--gr)">'+fn(totalIng)+'</div></div>'+
+    '<div class="caja-box" style="border-top:3px solid var(--rd)"><div class="caja-ico">-</div><div class="caja-lbl">Total Gastos (FCFA)</div><div class="caja-val" style="color:var(--rd)">'+fn(totalGas)+'</div></div>'+
+    '<div class="caja-box" style="border-top:3px solid '+(saldo>=0?'var(--gr)':'var(--rd)')+'"><div class="caja-ico">=</div><div class="caja-lbl">SALDO EN CAJA (FCFA)</div><div class="caja-val" style="color:'+(saldo>=0?'var(--gr)':'var(--rd)')+'">'+fn(saldo)+'</div><div class="caja-sub">Ingresos - Gastos acumulados</div></div>';
+
+  var cp=g('caja-paises');
+  if(cp){
+    var html='';
+    d.ubis.forEach(function(ubi){
+      var dat=byPais[ubi.id]||{ing:0,gas:0};
+      var neto=dat.ing-dat.gas;
+      html+='<div class="pais-card">'+
+        '<div class="pais-hdr"><div class="pais-nom">'+ubi.ciudad+' - '+ubi.pais+'</div>'+
+          '<span class="badge bblue">'+dat.mon+'</span>'+
+        '</div>'+
+        (ubi.cta?'<div style="font-size:10px;color:var(--gy);margin-bottom:8px">Cuenta: '+ubi.cta+(ubi.res?' | Resp: '+ubi.res:'')+'</div>':'')+
+        '<div class="pais-stats">'+
+          '<div class="ps"><div class="ps-l">Ingresos</div><div class="ps-v" style="color:var(--gr)">'+fn(dat.ing)+' '+dat.mon+'</div></div>'+
+          '<div class="ps"><div class="ps-l">Gastos</div><div class="ps-v" style="color:var(--rd)">'+fn(dat.gas)+' '+dat.mon+'</div></div>'+
+          '<div class="ps"><div class="ps-l">Saldo</div><div class="ps-v" style="color:'+(neto>=0?'var(--gr)':'var(--rd)')+'">'+fn(neto)+' '+dat.mon+'</div></div>'+
+        '</div>'+
+      '</div>';
+    });
+    cp.innerHTML=html||'<div class="empty">Anadir ubicaciones para ver desglose por pais.</div>';
+  }
+
+  // Tabla movimientos con saldo acumulado
+  var cm=g('caja-movs');
+  if(cm){
+    var saldoAcum=0;
+    var sorted=d.movs.slice().sort(function(a,b){return(a.fecha||'').localeCompare(b.fecha||'');});
+    cm.innerHTML=sorted.map(function(m){
+      if(m.mon==='FCFA'){if(m.tipo==='ingreso')saldoAcum+=m.imp;else saldoAcum-=m.imp;}
+      var ubi=d.ubis.find(function(u){return u.id===m.ubi;});
+      return '<tr>'+
+        '<td>'+fes(m.fecha)+'</td>'+
+        '<td style="font-weight:bold;color:'+(m.tipo==='ingreso'?GR:RD)+'">'+(m.tipo==='ingreso'?'Ingreso':'Gasto')+'</td>'+
+        '<td style="font-size:10px">'+(ubi?ubi.ciudad+' ('+ubi.pais+')':'General')+'</td>'+
+        '<td style="font-size:10px">'+(m.neg?negNom(m.neg,d):'-')+'</td>'+
+        '<td style="font-weight:bold;color:'+(m.tipo==='ingreso'?GR:RD)+'">'+fn(m.imp)+' '+(m.mon||'FCFA')+'</td>'+
+        '<td style="font-weight:bold;color:'+(saldoAcum>=0?GR:RD)+'">'+fn(saldoAcum)+' FCFA</td>'+
+        '<td style="font-size:11px">'+(m.desc||'-')+'</td>'+
+      '</tr>';
+    }).join('');
+  }
+}
+
+// ── ORGANIGRAMA ─────────────────────────────────────────────
+function rOrg(){
+  var d=getDB(),cont=g('org-cont');if(!cont)return;
+  function node(cls,t,s){return '<div class="org-node '+cls+'"><div class="org-title">'+t+'</div>'+(s?'<div class="org-sub">'+s+'</div>':'')+'</div>';}
+  var oscar=d.ems.find(function(e){return e.rol==='ceo';});
+  var samira=d.ems.find(function(e){return e.rol==='cofundadora';});
+  var fams=d.ems.filter(function(e){return e.rol==='familiar'&&e.est==='activo';});
+  var admins=d.ems.filter(function(e){return e.rol==='admin'&&e.est==='activo';});
+  var conds=d.ems.filter(function(e){return e.rol==='conductor'&&e.est==='activo';});
+  var emps=d.ems.filter(function(e){return e.rol==='empleado'&&e.est==='activo';});
+  var h='<div style="min-width:500px;text-align:center">';
+  h+='<div class="org-level">';
+  if(oscar)h+=node('on-ceo',oscar.nom+' '+oscar.ape,'CEO & Founder');
+  if(samira)h+=node('on-co',samira.nom+' '+samira.ape,'Co-Fundadora & Socia');
+  h+='</div><div class="org-line"></div>';
+  var n2=[];
+  admins.forEach(function(e){n2.push(node('on-adm',e.nom+' '+e.ape,'Admin. Local - '+(ubNom(e.ubi,d)||'')));});
+  fams.forEach(function(e){n2.push(node('on-fam',e.nom+' '+e.ape,'Socio Familiar (Heredero)'));});
+  if(n2.length){h+='<div class="org-level">'+n2.join('')+'</div><div class="org-line"></div>';}
+  var n3=[];
+  conds.forEach(function(e){n3.push(node('on-cnd',e.nom+' '+e.ape,'Conductor'));});
+  emps.forEach(function(e){n3.push(node('on-emp',e.nom+' '+e.ape,'Empleado'));});
+  if(n3.length){h+='<div class="org-level">'+n3.join('')+'</div>';}
+  if(d.negs.length){
+    h+='<div class="org-line"></div><div style="font-size:10px;color:var(--or);font-weight:bold;text-align:center;margin-bottom:6px">NEGOCIOS</div>';
+    h+='<div class="org-level">'+d.negs.map(function(n){return node('on-neg',n.nom,ubNom(n.ubi,d));}).join('')+'</div>';
+  }
+  h+='</div>';cont.innerHTML=h;
+}
+
+// ── UBICACIONES ─────────────────────────────────────────────
+function addUbi(){
+  var c=g('u-c').value.trim();if(!c){alert('Ciudad obligatoria');return;}
+  var d=getDB();
+  d.ubis.push({id:'u_'+uid(),ciudad:c,pais:g('u-p').value,mon:g('u-mon').value,
+    region:g('u-r').value.trim(),res:g('u-res').value.trim(),
+    cta:g('u-cta').value.trim(),notas:g('u-n').value.trim()});
+  setDB(d);g('u-c').value='';g('u-r').value='';g('u-res').value='';g('u-cta').value='';g('u-n').value='';
+  rUbis();updSel();toast('Ubicacion anadida: '+c);
+}
+function delUbi(id){
+  if(!confirm('Eliminar ubicacion?'))return;
+  var d=getDB();d.ubis=d.ubis.filter(function(u){return u.id!==id;});setDB(d);rUbis();
+}
+function rUbis(){
+  var d=getDB(),el=g('lista-ubis');if(!el)return;
+  if(!d.ubis.length){el.innerHTML='<div class="empty">No hay ubicaciones.</div>';return;}
+  el.innerHTML=d.ubis.map(function(u){
+    var negs=d.negs.filter(function(n){return n.ubi===u.id;});
+    return '<div class="card" style="border-left-color:var(--bl)">'+
+      '<div style="display:flex;justify-content:space-between">'+
+        '<div><b>'+u.ciudad+', '+u.pais+'</b> <span class="badge bblue">'+u.mon+'</span>'+
+          '<div class="is">'+(u.region?u.region+' | ':'')+
+            (u.res?'Resp: '+u.res+' | ':'')+
+            (u.cta?'Cta: '+u.cta:'')+'</div></div>'+
+        '<button class="btn br" onclick="APP.delUbi(''+u.id+'')">X</button>'+
+      '</div>'+
+      (negs.length?'<div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px">'+
+        negs.map(function(n){return '<span style="background:var(--n);color:var(--gl);padding:3px 10px;border-radius:12px;font-size:10px;font-weight:bold">'+n.nom+'</span>';}).join('')+'</div>':'')+
+    '</div>';
+  }).join('');
+}
+
+// ── NEGOCIOS ────────────────────────────────────────────────
+function addNeg(){
+  var nom=g('neg-n').value.trim();if(!nom){alert('Nombre obligatorio');return;}
+  var d=getDB();
+  var ubi=g('neg-u').value;
+  var mon=ubi?ubiMon(ubi,d):'FCFA';
+  d.negs.push({id:'n_'+uid(),nom:nom,tipo:g('neg-t').value,ubi:ubi,fi:g('neg-f').value,
+    inv:parseInt(g('neg-inv').value)||0,ing:parseInt(g('neg-ing').value)||0,
+    gas:parseInt(g('neg-gas').value)||0,mon:mon,desc:g('neg-d').value.trim(),activo:true});
+  setDB(d);g('neg-n').value='';g('neg-inv').value='';g('neg-ing').value='';g('neg-gas').value='';g('neg-d').value='';
+  rNegs();updSel();updDash();toast('Negocio anadido: '+nom);
+}
+function delNeg(id){
+  if(!confirm('Eliminar negocio?'))return;
+  var d=getDB();d.negs=d.negs.filter(function(n){return n.id!==id;});setDB(d);rNegs();updDash();
+}
+function iaConsejosNeg(){
+  var nom=g('neg-n').value.trim()||'nuevo negocio';
+  var tipo=g('neg-t').value;var inv=g('neg-inv').value||'no especificada';
+  var desc=g('neg-d').value.trim();
+  ir('ia');
+  pregIA('Voy a abrir un negocio de tipo "'+tipo+'" llamado "'+nom+'" en Guinea Ecuatorial con inversion de '+inv+' FCFA. '+desc+' Dame: 1) Como gestionarlo dia a dia 2) Que precio/tarifa poner 3) Como controlar ingresos y gastos 4) Riesgos principales 5) Tiempo estimado de recuperacion de inversion 6) Un modelo de contrato o acuerdo con quien lo lleve.');
+}
+function ingNeg(nid,d){return d.movs.filter(function(m){return m.tipo==='ingreso'&&m.neg===nid;}).reduce(function(s,m){return s+m.imp;},0);}
+function rNegs(){
+  var d=getDB(),el=g('lista-negs');if(!el)return;
+  if(!d.negs.length){el.innerHTML='<div class="empty">No hay negocios.</div>';return;}
+  el.innerHTML=d.negs.map(function(neg){
+    var nm=(neg.ing||0)-(neg.gas||0),roi=nm>0?Math.ceil((neg.inv||0)/nm):null;
+    var ir2=ingNeg(neg.id,d),pct=neg.inv>0?Math.min(100,Math.round(ir2/neg.inv*100)):0;
+    var mon=neg.mon||'FCFA';
+    return '<div class="neg-card">'+
+      '<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px">'+
+        '<div><b style="font-size:14px">'+neg.nom+'</b> <span class="badge bgold">'+neg.tipo+'</span>'+
+          '<div class="is">'+(ubNom(neg.ubi,d)||'Sin ubicacion')+(neg.fi?' | Desde '+fes(neg.fi):'')+'</div></div>'+
+        '<button class="btn br" onclick="APP.delNeg(''+neg.id+'')">X</button>'+
+      '</div>'+
+      (neg.desc?'<div style="font-size:11px;color:var(--gy);margin-bottom:8px">'+neg.desc+'</div>':'')+
+      '<div class="neg-stats">'+
+        '<div class="ns"><div class="ns-l">Inversion</div><div class="ns-v" style="font-size:12px">'+fn(neg.inv)+' '+mon+'</div></div>'+
+        '<div class="ns"><div class="ns-l">Ing/mes est.</div><div class="ns-v" style="color:var(--gr)">'+fn(neg.ing)+' '+mon+'</div></div>'+
+        '<div class="ns"><div class="ns-l">Gas/mes est.</div><div class="ns-v" style="color:var(--rd)">'+fn(neg.gas)+' '+mon+'</div></div>'+
+      '</div>'+
+      '<div class="roi-box">'+
+        '<div class="roi-t">Analisis ROI</div>'+
+        '<div class="roi-grid">'+
+          '<span class="roi-k">Neto mensual estimado:</span><span class="roi-v">'+fn(nm)+' '+mon+'</span>'+
+          '<span class="roi-k">Neto anual estimado:</span><span class="roi-v">'+fn(nm*12)+' '+mon+'</span>'+
+          '<span class="roi-k">Recuperar inversion en:</span><span class="'+(roi&&roi<24?'roi-ok':'roi-bad')+'">'+
+            (roi?roi+' meses':'Sin datos')+'</span>'+
+          '<span class="roi-k">Ingresos reales acumulados:</span><span class="roi-v">'+fn(ir2)+' '+mon+'</span>'+
+        '</div>'+
+        '<div class="prog-wrap">'+
+          '<div class="prog-lbl"><span>Recuperacion inversion</span><span>'+pct+'%</span></div>'+
+          '<div class="prog-bar"><div class="prog-fill'+(pct>=100?' prog-ok':'')+'" style="width:'+pct+'%"></div></div>'+
+        '</div>'+
+      '</div>'+
+    '</div>';
+  }).join('');
+}
+
+// ── EMPLEADOS ───────────────────────────────────────────────
+function toggleSalForm(){
+  var rol=g('em-r').value,sf=g('sal-form-new');
+  if(sf)sf.style.display=(rol==='admin'||rol==='empleado')?'':'none';
+}
+function addEm(){
+  var nom=g('em-n').value.trim(),ape=g('em-a').value.trim();
+  if(!nom||!ape){alert('Nombre y apellidos obligatorios');return;}
+  var d=getDB();
+  d.ems.push({id:'e_'+uid(),nom:nom,ape:ape,dip:g('em-d').value.trim(),
+    fn:g('em-f').value,rol:g('em-r').value,est:g('em-est').value,
+    ubi:g('em-u').value,neg:g('em-neg').value,
+    sal:parseInt(g('em-sal').value)||0,
+    bonc:parseInt(g('em-bonc').value)||0,
+    bonn:parseInt(g('em-bonn').value)||0,
+    bonnd:g('em-bonnd')?g('em-bonnd').value.trim():'',
+    tel:g('em-t').value.trim(),not:g('em-not').value.trim()});
+  setDB(d);['em-n','em-a','em-d','em-sal','em-t','em-not'].forEach(function(id){g(id).value='';});
+  rEms();toast('Anadido: '+nom+' '+ape);
+}
+function delEm(id){
+  if(!confirm('Eliminar miembro?'))return;
+  var d=getDB();d.ems=d.ems.filter(function(e){return e.id!==id;});setDB(d);rEms();
+}
+function toggleEstEm(id){
+  var d=getDB(),em=d.ems.find(function(e){return e.id===id;});if(!em)return;
+  em.est=em.est==='activo'?'inactivo':'activo';setDB(d);rEms();toast('Estado actualizado');
+}
+function editSal(id){
+  var d=getDB(),em=d.ems.find(function(e){return e.id===id;});if(!em)return;
+  var box=g('salbox_'+id);if(!box)return;
+  box.innerHTML='<div class="sal-edit-box">'+
+    '<div class="ct" style="margin-bottom:8px">Editar estructura salarial</div>'+
+    '<div class="fg">'+
+      '<div class="fi"><label>Salario fijo (FCFA/mes)</label><input id="es_s_'+id+'" type="number" value="'+em.sal+'" class="ig"></div>'+
+      '<div class="fi"><label>Bonus por conductor cumplido</label><input id="es_bc_'+id+'" type="number" value="'+em.bonc+'" class="ig"></div>'+
+      '<div class="fi"><label>Bonus objetivo negocio (FCFA)</label><input id="es_bn_'+id+'" type="number" value="'+em.bonn+'" class="ig"></div>'+
+      '<div class="fi"><label>Descripcion bonus negocio</label><input id="es_bnd_'+id+'" value="'+(em.bonnd||'')+'"></div>'+
+    '</div>'+
+    '<div class="btn-row">'+
+      '<button class="btn bg" onclick="APP.saveSal(''+id+'')">Guardar</button>'+
+      '<button class="btn" style="background:var(--wm)" onclick="APP.rEms()">Cancelar</button>'+
+    '</div></div>';
+}
+function saveSal(id){
+  var d=getDB(),em=d.ems.find(function(e){return e.id===id;});if(!em)return;
+  em.sal=parseInt(g('es_s_'+id).value)||0;
+  em.bonc=parseInt(g('es_bc_'+id).value)||0;
+  em.bonn=parseInt(g('es_bn_'+id).value)||0;
+  em.bonnd=g('es_bnd_'+id)?g('es_bnd_'+id).value.trim():'';
+  setDB(d);rEms();toast('Salario actualizado');
+}
+function rEms(){
+  var d=getDB(),el=g('lista-ems');if(!el)return;
+  if(!d.ems.length){el.innerHTML='<div class="empty">No hay miembros.</div>';return;}
+  var ri={ceo:'CEO & Founder',cofundadora:'Co-Fundadora & Socia',familiar:'Socio Familiar',admin:'Admin. Local',conductor:'Conductor',empleado:'Empleado'};
+  var rb={ceo:'bgold',cofundadora:'bpu2',familiar:'bblue',admin:'bblue',conductor:'bgreen',empleado:'bgrey'};
+  el.innerHTML=d.ems.map(function(e){
+    var esActivo=e.est!=='inactivo';
+    var salInfo='';
+    if(e.rol==='admin'||e.rol==='empleado'){
+      salInfo='<div id="salbox_'+e.id+'">'+
+        '<div class="sal-box">'+
+          '<b style="color:var(--gd)">Salario:</b> '+fn(e.sal)+' FCFA/mes'+
+          (e.bonc?' | Bonus/conductor: '+fn(e.bonc)+' FCFA':'')+
+          (e.bonn?' | Bonus negocio: '+fn(e.bonn)+' FCFA'+(e.bonnd?' ('+e.bonnd+')':''):'')+
+          ' <button class="btn bg" style="font-size:10px;padding:3px 10px;margin-left:8px" onclick="APP.editSal(''+e.id+'')">Editar</button>'+
+        '</div>'+
+      '</div>';
+    }
+    return '<div class="item" style="flex-direction:column;align-items:stretch;opacity:'+(esActivo?1:.6)+';border-left:4px solid '+(esActivo?'var(--gr)':'var(--gy)')+'">'+
+      '<div style="display:flex;justify-content:space-between;align-items:flex-start">'+
+        '<div><div class="in">'+e.nom+' '+e.ape+'</div>'+
+          '<div class="is">'+(ri[e.rol]||'Miembro')+(e.dip?' | Doc: '+e.dip:'')+(e.fn?' | Nac: '+fes(e.fn):'')+'</div>'+
+          (e.ubi||e.neg?'<div class="is">'+(e.ubi?ubNom(e.ubi,d):'')+' '+(e.neg?'| '+negNom(e.neg,d):'')+'</div>':'')+
+          (e.not?'<div class="is">'+e.not+'</div>':'')+
+        '</div>'+
+        '<div style="display:flex;gap:6px;align-items:flex-start;flex-shrink:0;flex-wrap:wrap">'+
+          '<span class="badge '+(rb[e.rol]||'bgrey')+'">'+(ri[e.rol]||'')+'</span>'+
+          '<span class="badge '+(esActivo?'bgreen':'bred')+'" style="cursor:pointer" onclick="APP.toggleEstEm(''+e.id+'')">'+(esActivo?'Activo':'Inactivo')+'</span>'+
+          '<button class="btn br" onclick="APP.delEm(''+e.id+'')">X</button>'+
+        '</div>'+
+      '</div>'+salInfo+
+    '</div>';
+  }).join('');
+}
+
+// ── CONTROL ENTREGAS ────────────────────────────────────────
+var curC=null,curCI=0;
+function rCtrl(){
+  var d=getDB(),el=g('ctrl-content');if(!el)return;
+  if(!curC){
+    if(!d.conds.length){el.innerHTML='<div class="card"><div class="empty">No hay conductores con ciclos asignados.</div></div>';return;}
+    el.innerHTML='<div class="card"><div class="ct">Selecciona conductor</div>'+
+      d.conds.map(function(c){
+        return '<button class="btn bn" style="width:100%;margin-bottom:8px;text-align:left;padding:12px" onclick="APP.selC(''+c.id+'')">'+
+          c.nom+' - '+c.mat+'<br><small style="color:var(--gl)">Desde '+fes(c.fi)+' | '+c.ciclos.length+' ciclos</small></button>';
+      }).join('')+'</div>';
+    return;
+  }
+  var cond=d.conds.find(function(c){return c.id===curC;});
+  if(!cond){curC=null;rCtrl();return;}
+  while(cond.ciclos.length<=curCI||cond.ciclos.length<6){
+    var last=cond.ciclos[cond.ciclos.length-1];
+    var pp=last.fin.split('-');var nxt=new Date(+pp[0],+pp[1]-1,+pp[2]);
+    nxt.setDate(nxt.getDate()+1);while(nxt.getDay()===0)nxt.setDate(nxt.getDate()+1);
+    var nc=gCiclos(fd(nxt),1);nc[0].num=cond.ciclos.length+1;cond.ciclos.push(nc[0]);setDB(d);
+  }
+  var cic=cond.ciclos[curCI],cid=curC+'_'+curCI,saved=d.ciclos[cid]||{};
+  var tabs='<div class="ctabs">'+
+    cond.ciclos.map(function(c,i){return '<button class="ctab'+(i===curCI?' on':'')+'" onclick="APP.camCI('+i+')">Ciclo '+c.num+'</button>';}).join('')+
+    '<button class="ctab" style="background:var(--g);color:#fff;border-color:var(--g)" onclick="APP.addCI()">+ Ciclo</button>'+
+  '</div>';
+  var pp0=cic.ini.split('-'),pp1=cic.fin.split('-');
+  var dS=new Date(+pp0[0],+pp0[1]-1,+pp0[2]),dE=new Date(+pp1[0],+pp1[1]-1,+pp1[2]);
+  var cur2=new Date(dS.getTime()),dlN=0,rows='';
+  while(cur2<=dE){
+    var esDom=cur2.getDay()===0,ds=fd(cur2),fe=fes(ds),se2=sem(ds),rid=cid+'_'+ds,bg=dlN%2===0?'#F2EDE4':'#fff';
+    if(esDom){
+      rows+='<tr style="background:#EDE8DE"><td class="td-n" style="background:var(--lg);color:#fff">-</td>'+
+        '<td style="color:var(--lg);font-size:10px">'+fe+'</td>'+
+        '<td style="color:'+RD+';font-weight:bold;font-size:10px">Dom.</td>'+
+        '<td colspan="8" style="text-align:center;font-style:italic;color:var(--lg);font-size:10px">DESCANSO</td>'+
+        '<td>-</td></tr>';
+    }else{
+      dlN++;
+      var iv=saved[rid+'-im']||'',hr2=saved[rid+'-hr']||'',hd=saved[rid+'-hd']||'';
+      var ga=saved[rid+'-ga']||'',de=saved[rid+'-de']||'',fi2=saved[rid+'-fi']||'';
+      rows+='<tr style="background:'+bg+'" id="tr-'+rid+'">'+
+        '<td class="td-n">'+dlN+'</td><td style="font-size:11px">'+fe+'</td><td style="font-size:10px">'+se2+'</td>'+
+        '<td><input type="text" class="inp-hr" data-cid="'+cid+'" id="'+rid+'-hr" value="'+hr2+'" placeholder="08:00" oninput="APP.cCalc(''+cid+'','+cond.ed+','+cond.bon+')"></td>'+
+        '<td><input type="text" class="inp-hr" data-cid="'+cid+'" id="'+rid+'-hd" value="'+hd+'" placeholder="20:00" oninput="APP.cCalc(''+cid+'','+cond.ed+','+cond.bon+')"></td>'+
+        '<td><input type="number" class="inp-im" data-cid="'+cid+'" id="'+rid+'-im" value="'+iv+'" placeholder="0" min="0" oninput="APP.cCalc(''+cid+'','+cond.ed+','+cond.bon+')"></td>'+
+        '<td><input type="text" class="inp-fi" data-cid="'+cid+'" id="'+rid+'-fi" value="'+fi2+'" placeholder="Fecha ingreso"></td>'+
+        '<td><input type="number" class="inp-ga" data-cid="'+cid+'" id="'+rid+'-ga" value="'+ga+'" placeholder="0" min="0" oninput="APP.cCalc(''+cid+'','+cond.ed+','+cond.bon+')"></td>'+
+        '<td><input type="text" class="inp-de" data-cid="'+cid+'" id="'+rid+'-de" value="'+de+'" placeholder="Desc. gasto"></td>'+
+        '<td style="font-weight:bold;font-size:10px;min-width:88px" id="'+rid+'-es">-</td>'+
+        '<td style="font-weight:bold;font-size:11px;min-width:80px" id="'+rid+'-ne">-</td>'+
+      '</tr>'+
+      '<tr id="mr-'+rid+'" style="display:none;background:#FFF8F8">'+
+        '<td colspan="3"></td>'+
+        '<td colspan="8" style="padding:3px 6px">'+
+          '<b style="font-size:10px;color:'+RD+'">Falta - motivo:</b>'+
+          '<select data-cid="'+cid+'" id="'+rid+'-mo" style="margin-left:6px;font-size:10px;padding:3px;border:1px solid #DDD;border-radius:4px;width:160px" onchange="APP.cCalc(''+cid+'','+cond.ed+','+cond.bon+')">'+
+            '<option value="">Selecciona</option><option value="libre">Dia libre mensual</option>'+
+            '<option value="enf">Enfermedad</option><option value="aver">Averia vehiculo</option>'+
+            '<option value="falta">Sin justificar</option><option value="otro">Otro</option>'+
+          '</select>'+
+          '<input type="text" data-cid="'+cid+'" id="'+rid+'-ob" style="margin-left:6px;width:140px;font-size:10px;padding:3px 5px;border:1px solid #DDD;border-radius:4px" placeholder="Observaciones...">'+
+        '</td>'+
+      '</tr>';
+    }
+    cur2.setDate(cur2.getDate()+1);
+  }
+  var res='<div class="rg">'+
+    '<div class="rc" style="border-top:3px solid '+G+'"><div class="rc-l">Total Entregado</div><div class="rc-v" style="color:'+G+'" id="rt-im-'+cid+'">0 FCFA</div></div>'+
+    '<div class="rc" style="border-top:3px solid '+RD+'"><div class="rc-l">Total Gastos</div><div class="rc-v" style="color:'+RD+'" id="rt-ga-'+cid+'">0 FCFA</div></div>'+
+    '<div class="rc" style="border-top:3px solid '+GR+'"><div class="rc-l">Neto FON GROUP</div><div class="rc-v" style="color:'+GR+'" id="rt-ne-'+cid+'">0 FCFA</div></div>'+
+    '<div class="rc" style="border-top:3px solid #2471A3"><div class="rc-l">Dias Cumplidos</div><div class="rc-v" style="color:#2471A3" id="rt-si-'+cid+'">0/30</div></div>'+
+    '<div class="rc" style="border-top:3px solid '+OR+'"><div class="rc-l">Parciales</div><div class="rc-v" style="color:'+OR+'" id="rt-pa-'+cid+'">0</div></div>'+
+    '<div class="rc" style="border-top:3px solid '+GY+'"><div class="rc-l">Faltas</div><div class="rc-v" style="color:'+RD+'" id="rt-no-'+cid+'">0</div></div>'+
+    '<div class="rc rg-bono" id="bon-'+cid+'"><div class="rc-l">Bonificacion conductor</div>'+
+      '<div class="rc-v" id="bv-'+cid+'">Pendiente</div><div class="rc-s" id="bs-'+cid+'">Necesita 30 dias sin falta ni parcial</div></div>'+
+  '</div>'+
+  '<div id="fb-'+cid+'" style="display:none;background:#FFF8F8;border:1.5px solid #E8A0A0;border-radius:8px;padding:10px;margin-top:8px">'+
+    '<div style="font-size:11px;font-weight:bold;margin-bottom:6px">Registro de faltas</div>'+
+    '<div id="fl-'+cid+'"></div>'+
+  '</div>';
+  el.innerHTML=
+    '<div class="card" style="margin-bottom:10px">'+
+      '<div style="display:flex;justify-content:space-between;align-items:center">'+
+        '<div><b style="font-size:14px">'+cond.nom+'</b><br>'+
+          '<span style="font-size:11px;color:var(--gy)">'+cond.mat+' | Entrega min: '+fn(cond.ed)+' FCFA/dia | Bono: '+fn(cond.bon)+' FCFA</span></div>'+
+        '<button class="btn" style="background:var(--wm);font-size:11px;padding:6px 10px" onclick="APP.curC=null;APP.rCtrl()">Volver</button>'+
+      '</div>'+
+    '</div>'+tabs+
+    '<div class="twrap"><table class="ct">'+
+      '<thead><tr><th style="width:28px">Dia</th><th>Fecha</th><th>Sem.</th>'+
+        '<th style="width:58px">H.Rec.</th><th style="width:58px">H.Ent.</th>'+
+        '<th style="background:#2D5A1B;width:80px">Importe</th>'+
+        '<th style="background:#1A3A5C;width:76px">F.Ingreso</th>'+
+        '<th style="background:#5A1A1A;width:74px">Gasto</th>'+
+        '<th style="background:#5A1A1A;width:110px">Desc.Gasto</th>'+
+        '<th>Estado</th><th style="background:#0D2A0D;width:80px">Neto</th>'+
+      '</tr></thead>'+
+      '<tbody>'+rows+'</tbody>'+
+    '</table></div>'+res;
+  Object.keys(saved).forEach(function(elId){var e=g(elId);if(e)e.value=saved[elId];});
+  cCalc(cid,cond.ed,cond.bon);
+}
+function selC(id){curC=id;curCI=0;rCtrl();}
+function camCI(i){curCI=i;rCtrl();}
+function addCI(){
+  var d=getDB(),cond=d.conds.find(function(c){return c.id===curC;});if(!cond)return;
+  var last=cond.ciclos[cond.ciclos.length-1];
+  var pp=last.fin.split('-');var nxt=new Date(+pp[0],+pp[1]-1,+pp[2]);
+  nxt.setDate(nxt.getDate()+1);while(nxt.getDay()===0)nxt.setDate(nxt.getDate()+1);
+  var nc=gCiclos(fd(nxt),1);nc[0].num=cond.ciclos.length+1;
+  cond.ciclos.push(nc[0]);setDB(d);curCI=cond.ciclos.length-1;rCtrl();toast('Nuevo ciclo anadido');
+}
+function cCalc(cid,ed,bon){
+  var tot=0,gas2=0,cum=0,par=0,flt=0,flist=[];
+  var ent=parseInt(ed)||15000,bonV=parseInt(bon)||20000;
+  document.querySelectorAll('[id^="'+cid+'_"][id$="-im"]').forEach(function(el){
+    var rid=el.id.replace('-im','');
+    var imp=parseFloat(el.value)||0,ga=(g(rid+'-ga')||{}).value||0;ga=parseFloat(ga)||0;
+    tot+=imp;gas2+=ga;var ne=imp-ga;
+    var es=g(rid+'-es'),nel=g(rid+'-ne'),mr=g('mr-'+rid),fila=el.closest('tr');
+    if(imp>=ent){cum++;if(es){es.textContent='Cumplido';es.style.color=GR;es.style.background='#F0FFF0';}if(nel){nel.textContent=fn(ne)+' FCFA';nel.style.color=ne>=0?GR:RD;}if(mr)mr.style.display='none';}
+    else if(imp>0){par++;if(es){es.textContent='Parcial '+fn(imp);es.style.color=OR;es.style.background='#FFF8E8';}if(nel){nel.textContent=fn(ne)+' FCFA';nel.style.color=ne>=0?GR:RD;}if(mr)mr.style.display='none';}
+    else{flt++;if(es){es.textContent='Falta';es.style.color=RD;es.style.background='#FFF0F0';}if(nel){nel.textContent='-';nel.style.color=GY;}if(mr)mr.style.display='';
+      var mot=((g(rid+'-mo')||{}).value)||'';var obs=((g(rid+'-ob')||{}).value)||'';
+      var fecha=fila?(fila.cells[1]||{}).textContent||'':'';var dia=fila?(fila.cells[2]||{}).textContent||'':'';
+      flist.push({f:fecha,d:dia,m:mot,o:obs});}
+  });
+  var ne2=tot-gas2;
+  sv('rt-im-'+cid,fn(tot)+' FCFA');sv('rt-ga-'+cid,fn(gas2)+' FCFA');sv('rt-ne-'+cid,fn(ne2)+' FCFA');
+  sv('rt-si-'+cid,cum+'/30');sv('rt-pa-'+cid,par);sv('rt-no-'+cid,flt);
+  var bv=g('bv-'+cid),bs=g('bs-'+cid),bc=g('bon-'+cid);
+  if(bv&&bs&&bc){
+    if(cum===30&&par===0&&flt===0){bv.textContent='GANADA +'+fn(bonV)+' FCFA';bs.textContent='30/30 dias cumplidos.';bc.className='rc rg-bono bono-ok';}
+    else if(par>0||flt>0){var r=[];if(flt>0)r.push(flt+' falta(s)');if(par>0)r.push(par+' parcial(es)');bv.textContent='SIN BONIFICACION';bs.textContent=r.join(', ')+'. Necesita 30 dias.';bc.className='rc rg-bono bono-ko';}
+    else{bv.textContent='Pendiente';bs.textContent='Necesita 30 dias (>= '+fn(ent)+' FCFA) sin falta.';bc.className='rc rg-bono';}
+  }
+  var fb=g('fb-'+cid),fl=g('fl-'+cid);
+  var mL={libre:'Dia libre',enf:'Enfermedad',aver:'Averia',falta:'Sin justificar',otro:'Otro','':"Sin especificar"};
+  if(fb&&fl){if(flist.length){fb.style.display='';fl.innerHTML='<table class="t"><thead><tr><th>Fecha</th><th>Dia</th><th>Motivo</th><th>Obs.</th></tr></thead><tbody>'+flist.map(function(f){return '<tr><td>'+f.f+'</td><td>'+f.d+'</td><td>'+(mL[f.m]||f.m)+'</td><td>'+(f.o||'-')+'</td></tr>';}).join('')+'</tbody></table>';}else fb.style.display='none';}
+  var db2=getDB();if(!db2.ciclos[cid])db2.ciclos[cid]={};db2.ciclos[cid]['_cum']=cum;db2.ciclos[cid]['_flt']=flt;db2.ciclos[cid]['_par']=par;setDB(db2);
+}
+
+// ── PAGOS ───────────────────────────────────────────────────
+function rPagos(){
+  var d=getDB(),el=g('pagos-content');if(!el)return;
+  var admins=d.ems.filter(function(e){return(e.rol==='admin'||e.rol==='empleado')&&e.est==='activo'&&e.sal>0;});
+  if(!admins.length){el.innerHTML='<div class="card"><div class="empty">No hay empleados activos con salario configurado.<br><button class="btn bg" style="margin-top:12px" onclick="APP.ir('ems')">Ir a Empleados</button></div></div>';return;}
+  var condsCum=0;
+  d.conds.forEach(function(cond){cond.ciclos.forEach(function(cic,ci){var cid=cond.id+'_'+ci,cd=d.ciclos[cid]||{};if((cd['_cum']||0)===30&&(cd['_par']||0)===0&&(cd['_flt']||0)===0)condsCum++;});});
+  var html='<div class="card"><div class="ct">Pagos del mes</div>'+
+    '<div style="background:var(--yl);border:1px solid var(--g);border-radius:8px;padding:10px;margin-bottom:12px;font-size:11px">'+
+      '<b>Conductores con ciclo completo: '+condsCum+'</b><br>'+
+      '<span style="color:var(--gy)">Este numero se usa para calcular el bonus de los administradores.</span>'+
+    '</div>';
+  admins.forEach(function(em){
+    var salFijo=em.sal||0,bonusCond=(em.bonc||0)*condsCum,bonusNeg=em.bonn||0,total=salFijo+bonusCond;
+    html+='<div class="pay-card">'+
+      '<div class="pay-t">'+em.nom+' '+em.ape+' - '+(em.rol==='admin'?'Admin. Local':'Empleado')+'</div>'+
+      '<div class="pay-grid">'+
+        '<span class="pay-k">Salario fijo:</span><span class="pay-v">'+fn(salFijo)+' FCFA/mes</span>'+
+        '<span class="pay-k">Bonus conductores ('+condsCum+' x '+fn(em.bonc||0)+'):</span><span class="pay-v">'+fn(bonusCond)+' FCFA</span>'+
+        (em.bonn?'<span class="pay-k">Bonus negocio:</span><span class="pay-v">'+fn(bonusNeg)+' FCFA'+(em.bonnd?' ('+em.bonnd+')':'')+'</span>':'<span class="pay-k">Bonus negocio:</span><span class="pay-v" style="color:rgba(255,255,255,.4)">No configurado</span>')+
+      '</div>'+
+      '<div class="pay-total-lbl">TOTAL A PAGAR</div>'+
+      '<div class="pay-total">'+fn(total)+' FCFA'+(em.bonn?' + posible bonus negocio':'')+' </div>'+
+      '<div class="btn-row" style="margin-top:10px">'+
+        '<button class="btn bg" onclick="APP.editSal(''+em.id+'');APP.ir('ems')">Editar salario</button>'+
+        '<button class="btn bgr" onclick="APP.regPago(''+em.id+'','+total+',''+em.nom+' '+em.ape+'')">Registrar pago</button>'+
+      '</div>'+
+    '</div>';
+  });
+  html+='</div>';el.innerHTML=html;
+}
+function regPago(id,total,nom){
+  var d=getDB();
+  var hoy=fd(new Date());
+  d.movs.push({id:'m_'+uid(),tipo:'gasto',cat:'salario',ubi:'u_mlb',neg:'',imp:total,mon:'FCFA',fecha:hoy,ref:'SAL-'+hoy,desc:'Pago mensual a '+nom});
+  setDB(d);toast('Pago registrado en finanzas');rFin();
+}
+
+// ── FINANZAS ────────────────────────────────────────────────
+function addMov(){
+  var imp=parseInt(g('fin-i').value)||0;if(!imp){alert('Importe obligatorio');return;}
+  var d=getDB();
+  d.movs.push({id:'m_'+uid(),tipo:g('fin-t').value,cat:g('fin-c').value,
+    ubi:g('fin-ubi').value,neg:g('fin-n').value,imp:imp,mon:g('fin-mon').value,
+    fecha:g('fin-f').value,ref:g('fin-r').value.trim(),desc:g('fin-d').value.trim()});
+  setDB(d);rFin();updDash();['fin-i','fin-r','fin-d'].forEach(function(id){g(id).value='';});toast('Movimiento registrado');
+}
+function delMov(id){var d=getDB();d.movs=d.movs.filter(function(m){return m.id!==id;});setDB(d);rFin();updDash();}
+function rFin(){
+  var d=getDB(),ing=0,gas2=0;
+  d.movs.forEach(function(m){if(m.mon==='FCFA'){if(m.tipo==='ingreso')ing+=m.imp;else gas2+=m.imp;}});
+  var neto=ing-gas2;
+  var res=g('fin-res');
+  if(res)res.innerHTML='<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:12px">'+
+    '<div class="rc" style="border-top:3px solid '+G+'"><div class="rc-l">Total Ingresos (FCFA)</div><div class="rc-v" style="color:'+G+'">'+fn(ing)+'</div></div>'+
+    '<div class="rc" style="border-top:3px solid '+RD+'"><div class="rc-l">Total Gastos (FCFA)</div><div class="rc-v" style="color:'+RD+'">'+fn(gas2)+'</div></div>'+
+    '<div class="rc" style="border-top:3px solid '+(neto>=0?GR:RD)+'"><div class="rc-l">Saldo / Neto (FCFA)</div><div class="rc-v" style="color:'+(neto>=0?GR:RD)+'">'+fn(neto)+'</div></div>'+
+  '</div>';
+  var catN={taxi:'Taxi',salario:'Salario',mant:'Mantenimiento',inv:'Inversion',airbnb:'Airbnb',abaceria:'Abaceria',otro:'Otro'};
+  var tb=g('fin-tbody');if(!tb)return;
+  if(!d.movs.length){tb.innerHTML='<tr><td colspan="10" style="text-align:center;padding:20px;color:var(--lg)">No hay movimientos</td></tr>';return;}
+  tb.innerHTML=d.movs.slice().reverse().map(function(m){
+    var ubi=d.ubis.find(function(u){return u.id===m.ubi;});
+    return '<tr><td>'+fes(m.fecha)+'</td>'+
+      '<td style="font-weight:bold;color:'+(m.tipo==='ingreso'?GR:RD)+'">'+(m.tipo==='ingreso'?'Ingreso':'Gasto')+'</td>'+
+      '<td style="font-size:10px">'+(catN[m.cat]||m.cat)+'</td>'+
+      '<td style="font-size:10px">'+(ubi?ubi.ciudad:'-')+'</td>'+
+      '<td style="font-size:10px">'+(m.neg?negNom(m.neg,d):'-')+'</td>'+
+      '<td style="font-weight:bold;color:'+(m.tipo==='ingreso'?GR:RD)+'">'+fn(m.imp)+'</td>'+
+      '<td style="font-size:10px">'+(m.mon||'FCFA')+'</td>'+
+      '<td style="font-size:10px;font-family:monospace">'+(m.ref||'-')+'</td>'+
+      '<td style="font-size:11px">'+(m.desc||'-')+'</td>'+
+      '<td><button class="btn br" onclick="APP.delMov(''+m.id+'')">X</button></td></tr>';
+  }).join('');
+}
+
+// ── SELECTS ─────────────────────────────────────────────────
+function updSel(){
+  var d=getDB(),ubis=d.ubis||[],negs=d.negs||[];
+  ['neg-u','em-u','fin-ubi'].forEach(function(id){
+    var el=g(id);if(!el)return;var cur=el.value;
+    var def=id==='fin-ubi'?'<option value="">-- General --</option>':'<option value="">-- Selecciona --</option>';
+    el.innerHTML=def+ubis.map(function(u){return '<option value="'+u.id+'"'+(u.id===cur?' selected':'')+'>'+u.ciudad+' ('+u.pais+')</option>';}).join('');
+  });
+  ['em-neg','fin-n'].forEach(function(id){
+    var el=g(id);if(!el)return;var cur=el.value;
+    el.innerHTML='<option value="">-- General FON GROUP --</option>'+
+      negs.map(function(n){return '<option value="'+n.id+'"'+(n.id===cur?' selected':'')+'>'+n.nom+'</option>';}).join('');
+  });
+}
+
+// ── IA AUTONOMA ─────────────────────────────────────────────
+function pregIA(q){
+  var preg=q||(g('ia-q')?g('ia-q').value.trim():'');
+  if(!preg){alert('Escribe una pregunta');return;}
+  var resp=g('ia-resp');if(!resp)return;
+  resp.style.display='block';
+  resp.innerHTML='<div class="ia-loading">Analizando datos de FON GROUP...</div>';
+  var d=getDB(),ctx=bCtx(d);
+  fetch('https://api.anthropic.com/v1/messages',{
+    method:'POST',headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({
+      model:'claude-sonnet-4-6',max_tokens:1500,
+      system:'Eres RODRIGO, el asesor empresarial experto de FON GROUP, empresa familiar de Oscar Antonio Ondo Mikue (CEO) e Ines Nchama (Co-Fundadora), con sede en Malabo, Guinea Ecuatorial y presencia en Espana. Eres experto en: gestion empresarial, finanzas, derecho mercantil en Guinea Ecuatorial, transporte y logistica, comercio minorista, inversiones inmobiliarias y Airbnb, recursos humanos y estructuras salariales, expansion de negocios en Africa Central. Tienes acceso a todos los datos reales de FON GROUP en tiempo real. Analizas antes de responder, verificas cada recomendacion con datos concretos, eres directo y practico. Siempre indicas cifras especificas, plazos realistas y pasos concretos. Nunca das respuestas vagas. Datos actuales de FON GROUP: '+ctx,
+      messages:[{role:'user',content:preg}]
+    })
+  })
+  .then(function(r){return r.json();})
+  .then(function(data){
+    var txt='';
+    if(data.content&&data.content[0]&&data.content[0].text)txt=data.content[0].text;
+    else if(data.error)txt='Error: '+data.error.message;
+    else txt='Sin respuesta. Verifica conexion a internet.';
+    if(resp){resp.innerHTML='<div class="ia-resp">'+txt.replace(/
+/g,'<br>')+'</div>';}
+    if(!q&&g('ia-q'))g('ia-q').value='';
+  })
+  .catch(function(e){if(resp)resp.innerHTML='<div class="ia-resp">Error de conexion: '+e.message+'<br><br>Este asesor requiere conexion a internet para funcionar.</div>';});
+}
+function limpIA(){var r=g('ia-resp');if(r){r.innerHTML='';r.style.display='none';}}
+
+function bCtx(d){
+  var ing=0,gas2=0;d.movs.forEach(function(m){if(m.mon==='FCFA'){if(m.tipo==='ingreso')ing+=m.imp;else gas2+=m.imp;}});
+  var ctx='EMPRESA: FON GROUP | CEO: Oscar Antonio Ondo Mikue | Co-Fundadora: Ines Nchama Ndong Ada | ';
+  ctx+='UBICACIONES: '+d.ubis.map(function(u){return u.ciudad+' ('+u.pais+', '+u.mon+')';}).join(', ')+' | ';
+  ctx+='NEGOCIOS: '+d.negs.map(function(n){var nm=(n.ing||0)-(n.gas||0);return n.nom+' (inv:'+fn(n.inv)+' FCFA, neto est:'+fn(nm)+'/mes, ROI:'+(nm>0?Math.ceil(n.inv/nm)+' meses':'sin datos')+')';}).join(', ')+' | ';
+  ctx+='CONDUCTORES: '+d.conds.map(function(c){return c.nom+' en '+c.mat+' (entrega min '+fn(c.ed)+' FCFA/dia)';}).join(', ')+' | ';
+  ctx+='FINANZAS FCFA: Ingresos='+fn(ing)+', Gastos='+fn(gas2)+', Saldo='+fn(ing-gas2)+' | ';
+  ctx+='EMPLEADOS: '+d.ems.filter(function(e){return e.est==='activo';}).map(function(e){return e.nom+' '+e.ape+' ('+e.rol+(e.sal>0?', salario '+fn(e.sal)+' FCFA/mes':'')+')';}).join(', ');
+  return ctx;
+}
+
+// ── INIT ────────────────────────────────────────────────────
+window.onload=function(){
+  var d=getDB();if(!localStorage.getItem(KEY))setDB(d);
+  updSel();updDash();
+};
+setInterval(save,30000);
+
+// API PUBLICA
+return{
+  save:save,ir:ir,updDash:updDash,
+  addUbi:addUbi,delUbi:delUbi,
+  addNeg:addNeg,delNeg:delNeg,iaConsejosNeg:iaConsejosNeg,
+  toggleSalForm:toggleSalForm,addEm:addEm,delEm:delEm,
+  toggleEstEm:toggleEstEm,editSal:editSal,saveSal:saveSal,rEms:rEms,
+  selC:selC,camCI:camCI,addCI:addCI,cCalc:cCalc,rCtrl:rCtrl,
+  curC:null,
+  rPagos:rPagos,regPago:regPago,
+  addMov:addMov,delMov:delMov,
+  pregIA:pregIA,limpIA:limpIA
+};
+
+})();
+</script>
+</body>
+</html>
